@@ -1,0 +1,7 @@
+{
+  "name": "Society-Maintenance",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
