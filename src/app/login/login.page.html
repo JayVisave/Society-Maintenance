@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+       <ion-row>
+      <ion-col >
+        <ion-item>
+          <ion-label position="floating" >E-mail</ion-label>
+          <ion-input type="email" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input type="password" required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col >
+          <ion-button class="ion-padding" color="primary" expand="full">Login</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col >
+          <ion-button class="ion-padding" color="light" expand="full" [routerLink]="['/register']">Register</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
