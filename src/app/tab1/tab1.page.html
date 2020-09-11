@@ -7,26 +7,178 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" >
+  <ion-refresher slot="fixed" (ionRefresh)="getUserDetails()">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <!-- <ion-card color="primary" *ngFor="let bill of bills" > -->
+    <ion-card color="primary" *ngFor="let bill of bills" > 
   
-  <ion-card color="primary" >
     <ion-card-header>
-      <ion-card-subtitle class="ion-text-center">Bill Month-Year</ion-card-subtitle>
+      <ion-card-title class="ion-text-center">{{bill.sname}}</ion-card-title>
     </ion-card-header>
       <ion-item>
-
-        <ion-label>Bill Details </ion-label>
+        <!-- <ion-label>{{bill.month}}-{{bill.year}}</ion-label> -->
+        <ion-label>Bill Details</ion-label>
+       <!-- <ion-label>Bill Details</ion-label>-->
         <ion-button >
           <ion-icon name="cloud-download" slot="end"></ion-icon>
-          Download
+          Download PDF
         </ion-button>
-      </ion-item>
- 
+      </ion-item> 
+    <!-- <ion-card-content>{{bill.details}}</ion-card-content> -->
+    <ion-card-content class="ion-no-padding">
+      <ion-grid>
+      <ion-row  >
+        <ion-col size="8" class="ion-align-self-start">
+          <ion-item  class="ion-no-margin">
+          <ion-label >Type Bill</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-align-self-center">
+          <ion-item>
+          <ion-label>{{bill.type}}</ion-label>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row  >
+        <ion-col size="8" class="ion-align-self-start">
+          <ion-item>
+            <ion-label>Category Bill</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-align-self-center">
+          <ion-item>
+          <ion-label>{{bill.category}}</ion-label>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row  >
+        <ion-col size="8" class="ion-align-self-start">
+          <ion-item>
+            <ion-label>Water Bill</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-align-self-center">
+          <ion-item>
+          <ion-label>{{bill.water}}</ion-label>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row  >
+        <ion-col size="8" class="ion-align-self-start">
+          <ion-item>
+            <ion-label>Struct. M.</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-align-self-center">
+          <ion-item>
+          <ion-label>{{bill.struct}}</ion-label>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row  >
+        <ion-col size="8" class="ion-align-self-start">
+          <ion-item>
+            <ion-label>Parking</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-align-self-center">
+          <ion-item>
+          <ion-label>{{bill.parking}}</ion-label>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row  >
+        <ion-col size="8" class="ion-align-self-start">
+          <ion-item>
+            <ion-label>Complaint Penalty</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-align-self-center">
+          <ion-item>
+          <ion-label>{{bill.complaint}}</ion-label>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row  >
+        <ion-col size="8" class="ion-align-self-start">
+          <ion-item>
+            <ion-label>Society Events</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-align-self-center">
+          <ion-item>
+          <ion-label>{{bill.event}}</ion-label>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row  >
+        <ion-col size="8" class="ion-align-self-start">
+          <ion-item>
+            <ion-label>NOC Filing</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-align-self-center">
+          <ion-item>
+          <ion-label>{{bill.noc}}</ion-label>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row  >
+        <ion-col size="8" class="ion-align-self-start">
+          <ion-item>
+            <ion-label>Interest</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-align-self-center">
+          <ion-item>
+          <ion-label>{{bill.interest}}</ion-label>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row  >
+        <ion-col size="8" class="ion-align-self-start">
+          <ion-item>
+            <ion-label>Total</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-align-self-center">
+          <ion-item>
+          <ion-label>{{bill.billsum}}</ion-label>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+      <!-- <ion-list class="ion-padding">
+  
+        <ion-item>
+          <ion-grid class="ion-no-padding">
+           <ion-row  >
+        <ion-col size="8" class="ion-align-self-start">
+          <ion-label >Type of Resident</ion-label>
+        </ion-col>
+        <ion-col class="ion-align-self-center">
+          <ion-label>350000</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+        
   
 
-    <ion-card-content>
-      This is content, without any paragraph or header tags,
-      within an ion-card-content element.
+  
+
+
+ 
+ 
+
+      </ion-list> -->
     </ion-card-content>
   </ion-card>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="wallet-sharp" (click)="getUserDetails()"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>

@@ -4,29 +4,72 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+<!--<form name="registerForm" (ngSubmit)="register(user,userDetails)"> -->
   <ion-grid>
        <ion-row>
       <ion-col >
-        <ion-item>
-          <ion-label position="floating" >E-mail</ion-label>
-          <ion-input type="email" [(ngModel)]="user.email" required></ion-input>
+        <ion-item >
+          <ion-label position="stacked" >E-mail</ion-label>
+          <ion-input #emailInput type="email" [(ngModel)]="user.email" required></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label position="floating">Password</ion-label>
-          <ion-input type="password" [(ngModel)]="user.password" required></ion-input>
+        <ion-item >
+          <ion-label  position="stacked" >Password</ion-label>
+          <ion-input #passwordInput type="password" [(ngModel)]="user.password" required></ion-input>
         </ion-item>
+        <ion-item >
+          <ion-label  position="stacked" >Full Name</ion-label>
+          <ion-input type="text" [(ngModel)]="userDetails.name" required></ion-input>
+        </ion-item>
+        <ion-list>
+          <ion-item>
+            <ion-label>Society</ion-label>
+            <ion-select placeholder="Select One" okText="Confirm" cancelText="Cancel" [(ngModel)]="userDetails.societyName" required>
+              <ion-select-option value="Wakanda CHS.">Wakanda CHS.</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Category</ion-label>
+            <ion-select placeholder="Select One"okText="Confirm" cancelText="Cancel" [(ngModel)]="userDetails.isCommercial" required>
+              <ion-select-option value="false">Normal</ion-select-option>
+              <ion-select-option value="true">Commercial</ion-select-option>
+            </ion-select>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label>Type</ion-label>
+            <ion-select placeholder="Select One" okText="Confirm" cancelText="Cancel" [(ngModel)]="userDetails.isOwner" required>
+              <ion-select-option value="false">Owner</ion-select-option>
+              <ion-select-option value="true">Tenant</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Parking Vehicles</ion-label>
+            <ion-select placeholder="Select One" okText="Confirm" cancelText="Cancel" [(ngModel)]="userDetails.parkingVehicles" required>
+              <ion-select-option value="0">None</ion-select-option>
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+              <ion-select-option value="4">4</ion-select-option>
+              <ion-select-option value="5">5</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+        </ion-list>
+      
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-          <ion-button class="ion-padding" color="primary" expand="full" [routerLink]="['/register']" (click)="register(user)">Sign Up</ion-button>
+       <!-- <ion-button class="ion-padding" color="primary" expand="full" [routerLink]="['/register']" type="submit" >Sign Up</ion-button>
+        -->
+        <ion-button class="ion-padding" color="primary" expand="full" [routerLink]="['/register']" (click)="register(user,userDetails)">Sign Up</ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col >
-          <ion-button class="ion-padding" color="light" expand="full" [routerLink]="['/login']">Existinguser? Login</ion-button>
+          <ion-button class="ion-padding" color="light" expand="full" [routerLink]="['/login']">Existing User? Login</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
-
+<!--</form> -->
 </ion-content>
