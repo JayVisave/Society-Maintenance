@@ -31,6 +31,7 @@ user = {} as User;
       try{
         await this.afAuth.signInWithEmailAndPassword(user.email,user.password).then(data => {
           console.log(data);
+          set("userId",data.user.uid);
           this.navCtrl.navigateRoot('/tabs');
         });
         

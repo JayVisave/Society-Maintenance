@@ -1,7 +1,23 @@
 ion-slide{
-    padding: 160px 20px;
+    padding-top: 10%;
     display: block;
     h2{
         font-weight: bold;
     }
+}
+
+img{
+    vertical-align: top;
+    width: 80%;
+    height: 100%;
+}
+
+ion-button{
+    margin-top: 80%;
+    vertical-align: bottom;
+    
+}
+
+p{
+    font-size: small;
 }

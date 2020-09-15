@@ -7,8 +7,39 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+   <ion-col >
+     <ion-item >
+       <ion-label position="stacked" >E-mail</ion-label>
+       <ion-input #emailInput type="email" [(ngModel)]="user.email" required></ion-input>
+     </ion-item>
+     <ion-item >
+      <ion-label  position="stacked" >Full Name</ion-label>
+      <ion-input type="text" [(ngModel)]="complaint.name" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Society</ion-label>
+      <ion-select placeholder="Select One" okText="Confirm" cancelText="Cancel" [(ngModel)]="complaint.society" required>
+        <ion-select-option value="Wakanda CHS.">Wakanda CHS.</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Complaint type</ion-label>
+      <ion-select placeholder="Select One"okText="Confirm" cancelText="Cancel" [(ngModel)]="complaint.comp_type" required>
+        <ion-select-option value="false">General</ion-select-option>
+        <ion-select-option value="true">Specific</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item >
+      <ion-label  position="stacked" >Write your complaint</ion-label>
+      <ion-input type="text" [(ngModel)]="complaint.issue" required></ion-input>
+    </ion-item>
+  </ion-col>
+</ion-row>
+</ion-grid>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
+    <ion-fab-button (click)="file_Complaint(user,userDetails)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
