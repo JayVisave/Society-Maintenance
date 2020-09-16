@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { get, GlobalService } from '../global.service';
@@ -11,14 +11,21 @@ import { get, GlobalService } from '../global.service';
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit {
   userDetails: any;
   sum: number;
   bills: any;
-  items: any;
-  result: JSON;
-  allData: any;
-   comments= [];
+  societyDetails: any;
+  parkingNumber: number;
+  nocGenerated: number;
+  hasComplaints: number;
+  isCommercial: string;
+  isOwner: string;
+  typeUser: number;
+  catUser: number;
+  todaysmonth: string;
+  todaysyear: string;
+  todaysmonthNumber: number;
   // userDetailsConverter= {
   //   toFirestore: function(userD) {
   //       return {
@@ -37,18 +44,23 @@ export class Tab1Page {
     private toastCtrl: ToastController,
     private fireStore: AngularFirestore,
      ) {}
-
-  ionViewWillEnter(){}
-
-  async getUserDetails(){
+  ngOnInit() {
+      this.getUserDetails(event);
+    }
+ // ionViewWillEnter(){}
+  async getUserDetails(event){
     let loader = this.loadingCtrl.create({
       message: "Please wait..."
     });
     (await loader).present();
     try{
-  
+
+      this.nocGenerated = 0;
+      this.hasComplaints = 0;
+      // var day = generationDate.getDay();
       GlobalService.userId = await get("userId");
       console.log("Global "+  GlobalService.userId);
+  
       // this.fireStore.firestore.collection('comments').doc('').get().then(snapshot => {
       //   snapshot.docs.forEach(doc => {
       //     const comment = doc.data()
@@ -59,31 +71,13 @@ export class Tab1Page {
       //   })
       // })
 
-      this.fireStore.firestore.collection("bills").doc("HhBYfdGHu0rlFLBEEBTm").get()
-      .then(doc=>{
-        this.sum = doc.data()["type"] + doc.data()["category"] + doc.data()["water"] + doc.data()["structure"] + doc.data()["complaint"] + doc.data()["parking"] + doc.data()["noc"] + doc.data()["event"] + doc.data()["interest"]
-        this.bills =  [doc.data()].map(e => {
-          return{
-            type: e["type"],
-            category : e["category"],
-            water : e["water"],
-            struct: e["structure"],
-            parking : e["parking"],
-            complaint : e["complaint"],
-            noc : e["noc"],
-            interest : e["interest"],
-            sname : e["name"],
-            event : e["event"],
-            billsum : this.sum,
-          }
-        });
-        //let sum = this.bills.reduce((acc, cur) => acc + cur, 0);
-        console.log("Soluchan : "+this.sum);
-        });
-
       this.fireStore.firestore.collection("userDetails").doc(GlobalService.userId).get()
       .then(doc=>{
         console.log("Document data:", doc.data()["societyName"]);
+        this.parkingNumber =  doc.data()["parkingVehicles"];
+        this.isCommercial = doc.data()["isCommercial"];
+        this.isOwner = doc.data()["isOwner"];
+        
         // const comment = doc.data();   // get data in result variable
         // this.items = JSON.stringify(comment); // then convert data to json string
         // console.log("Items "+this.items); 
@@ -95,16 +89,92 @@ export class Tab1Page {
             name: e["name"],
             sname: e["societyName"],
             parking: e["parkingVehicles"],
+        
           }
         });
-        // console.log("Outside :",this.userDetails.sname);
+        console.log("Outside :", this.userDetails["sname"]);
         // console.log("Outside :",this.userDetails.sname);
         // this.userDetails.sname = JSON.stringify(doc.data()["isCommercial"]);
         //  console.log("Outside :",this.userDetails.sname); // got result of particular string
         // this.userDetails.name = this.allData["name"];
         // this.userDetails.parking = this.allData["parkingVehicles"];
         });
-        
+
+      this.fireStore.firestore.collection("society").doc("sFxpx7WgYy9ojV4pzgvJ").get()
+      .then(doc=>{
+        var generationDate = new Date();
+        this.todaysyear = generationDate.getFullYear().toString();
+        this.todaysmonth =generationDate.toLocaleString('default', { month: 'short' });
+        this.todaysmonthNumber = generationDate.getMonth();
+        if(this.isCommercial == "true"){
+          this.catUser = doc.data()["commercial"]
+        }
+        else{
+          this.catUser = doc.data()["normal"]
+        }
+        if(this.isOwner == "true"){
+          this.typeUser = doc.data()["owner"]
+        }
+        else{
+          this.typeUser = doc.data()["tenant"]
+        }
+        this.sum = this.typeUser + this.catUser + doc.data()["water"] + doc.data()["structure"] + doc.data()["complaint"] + doc.data()["parking"] + doc.data()["noc"] + doc.data()["event"] + doc.data()["interest"]
+        this.societyDetails =  [doc.data()].map(e => {
+          return{
+            type: this.typeUser,
+            category : this.catUser,
+            water : e["water"],
+            struct: e["structure"],
+            parking : e["parking"] *  this.parkingNumber,
+            complaint : e["complaint"] * this.hasComplaints,
+            noc : e["noc"] * this.nocGenerated,
+            interest : e["interest"],
+            sname : e["name"],
+            event : e["event"],
+            billsum : this.sum,
+            month: this.todaysmonth,
+            year: this.todaysyear,
+            monthNumber: this.todaysmonthNumber,
+          }
+          
+        });
+        this.fireStore.collection("userDetails").doc(GlobalService.userId).collection("bills").doc(this.todaysmonth+" "+this.todaysyear).set({...this.societyDetails[0]});
+        this.fireStore.collection("userDetails").doc(GlobalService.userId).collection("bills", ref=> ref.orderBy('monthNumber','desc')).snapshotChanges().subscribe( data=>{
+          this.bills = data.map(e => {
+            console.log("Type "+e.payload.doc.data()["type"]);
+          return{
+            type: e.payload.doc.data()["type"],
+            category : e.payload.doc.data()["category"],
+            water : e.payload.doc.data()["water"],
+            struct: e.payload.doc.data()["struct"],
+            parking : e.payload.doc.data()["parking"],
+            complaint : e.payload.doc.data()["complaint"],
+            noc : e.payload.doc.data()["noc"],
+            interest : e.payload.doc.data()["interest"],
+            sname : e.payload.doc.data()["sname"],
+            event : e.payload.doc.data()["event"],
+            billsum :  e.payload.doc.data()["billsum"],
+            month:  e.payload.doc.data()["month"],
+            year:  e.payload.doc.data()["year"],
+          }
+          })
+        })
+      
+        //let sum = this.bills.reduce((acc, cur) => acc + cur, 0);
+        // console.log("pasking : " + this.parkingNumber);
+       
+        // this.bills.map(data=>{
+        //   console.log("pasking : "+data["parking"])
+        //   data["parking"] = data["parking"]+100;
+        //   console.log("pasking : "+data["parking"])
+        // })
+      
+      
+        });
+
+     
+       
+   
 
         
          // this.allData.forEach(e=>{
@@ -152,6 +222,10 @@ export class Tab1Page {
     catch(e){
       this.showToast(e);
     }
+    setTimeout(() => {
+     
+      event.target.complete();
+    }, 1000);
     
   }
   showToast(message: string){

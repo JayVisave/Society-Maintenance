@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" >
-  <ion-refresher slot="fixed" (ionRefresh)="getUserDetails()">
+  <ion-refresher slot="fixed" (ionRefresh)="getUserDetails($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <!-- <ion-card color="primary" *ngFor="let bill of bills" > -->
@@ -17,8 +17,8 @@
       <ion-card-title class="ion-text-center">{{bill.sname}}</ion-card-title>
     </ion-card-header>
       <ion-item>
-        <!-- <ion-label>{{bill.month}}-{{bill.year}}</ion-label> -->
-        <ion-label>Bill Details</ion-label>
+        <ion-label>{{bill.month}}-{{bill.year}}</ion-label>
+        <!-- <ion-label>Bill Details</ion-label> -->
        <!-- <ion-label>Bill Details</ion-label>-->
         <ion-button >
           <ion-icon name="cloud-download" slot="end"></ion-icon>
@@ -28,6 +28,18 @@
     <!-- <ion-card-content>{{bill.details}}</ion-card-content> -->
     <ion-card-content class="ion-no-padding">
       <ion-grid>
+        <ion-row  >
+          <ion-col size="8" class="ion-align-self-start">
+            <ion-item color="dark" class="ion-no-margin">
+            <ion-label  >Details</ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col class="ion-align-self-center">
+            <ion-item color="dark">
+            <ion-label>Rs.</ion-label>
+          </ion-item>
+          </ion-col>
+        </ion-row>
       <ion-row  >
         <ion-col size="8" class="ion-align-self-start">
           <ion-item  class="ion-no-margin">
@@ -35,7 +47,7 @@
           </ion-item>
         </ion-col>
         <ion-col class="ion-align-self-center">
-          <ion-item>
+          <ion-item class="ion-no-margin">
           <ion-label>{{bill.type}}</ion-label>
         </ion-item>
         </ion-col>
@@ -47,7 +59,7 @@
           </ion-item>
         </ion-col>
         <ion-col class="ion-align-self-center">
-          <ion-item>
+          <ion-item class="ion-no-margin">
           <ion-label>{{bill.category}}</ion-label>
         </ion-item>
         </ion-col>
@@ -59,7 +71,7 @@
           </ion-item>
         </ion-col>
         <ion-col class="ion-align-self-center">
-          <ion-item>
+          <ion-item class="ion-no-margin">
           <ion-label>{{bill.water}}</ion-label>
         </ion-item>
         </ion-col>
@@ -71,7 +83,7 @@
           </ion-item>
         </ion-col>
         <ion-col class="ion-align-self-center">
-          <ion-item>
+          <ion-item class="ion-no-margin">
           <ion-label>{{bill.struct}}</ion-label>
         </ion-item>
         </ion-col>
@@ -83,7 +95,7 @@
           </ion-item>
         </ion-col>
         <ion-col class="ion-align-self-center">
-          <ion-item>
+          <ion-item class="ion-no-margin">
           <ion-label>{{bill.parking}}</ion-label>
         </ion-item>
         </ion-col>
@@ -91,11 +103,11 @@
       <ion-row  >
         <ion-col size="8" class="ion-align-self-start">
           <ion-item>
-            <ion-label>Complaint Penalty</ion-label>
+            <ion-label>Penalty</ion-label>
           </ion-item>
         </ion-col>
         <ion-col class="ion-align-self-center">
-          <ion-item>
+          <ion-item class="ion-no-margin">
           <ion-label>{{bill.complaint}}</ion-label>
         </ion-item>
         </ion-col>
@@ -107,7 +119,7 @@
           </ion-item>
         </ion-col>
         <ion-col class="ion-align-self-center">
-          <ion-item>
+          <ion-item class="ion-no-margin">
           <ion-label>{{bill.event}}</ion-label>
         </ion-item>
         </ion-col>
@@ -119,7 +131,7 @@
           </ion-item>
         </ion-col>
         <ion-col class="ion-align-self-center">
-          <ion-item>
+          <ion-item class="ion-no-margin">
           <ion-label>{{bill.noc}}</ion-label>
         </ion-item>
         </ion-col>
@@ -131,20 +143,20 @@
           </ion-item>
         </ion-col>
         <ion-col class="ion-align-self-center">
-          <ion-item>
+          <ion-item class="ion-no-margin">
           <ion-label>{{bill.interest}}</ion-label>
         </ion-item>
         </ion-col>
       </ion-row>
       <ion-row  >
         <ion-col size="8" class="ion-align-self-start">
-          <ion-item>
+          <ion-item color="dark">
             <ion-label>Total</ion-label>
           </ion-item>
         </ion-col>
         <ion-col class="ion-align-self-center">
-          <ion-item>
-          <ion-label>{{bill.billsum}}</ion-label>
+          <ion-item color="dark" class="ion-no-margin">
+          <ion-label >{{bill.billsum}}</ion-label>
         </ion-item>
         </ion-col>
       </ion-row>
@@ -175,10 +187,10 @@
       </ion-list> -->
     </ion-card-content>
   </ion-card>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon name="wallet-sharp" (click)="getUserDetails()"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab> -->
 
 </ion-content>
