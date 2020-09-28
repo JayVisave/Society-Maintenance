@@ -1,0 +1,52 @@
+/* Set the width to the full container and center the content */
+ion-select {
+    width: 100%;
+  
+    justify-content: end;
+  }
+
+  ion-card {
+    justify-content: center;
+    padding: 2px;
+  }
+
+ion-title{
+  font-size: small;
+}
+  
+  /* Set the flex in order to size the text width to its content */
+  ion-select::part(placeholder),
+  ion-select::part(text) {
+    flex: 0 0 auto;
+  }
+  
+  /* Set the placeholder color and opacity */
+  ion-select::part(placeholder) {
+    color: #000000;
+    opacity: 1;
+  }
+  
+  /*
+   * Set the font of the first letter of the placeholder
+   * Shadow parts work with pseudo-elements, too!
+   * https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements
+   */
+
+  
+  /* Set the text color */
+  
+  /* Set the icon color and opacity */
+  ion-select::part(icon) {
+    color: var(--ion-color-primary);
+    opacity: 1;
+  }
+
+  .white-card{
+    --ion-background-color: white;
+    
+  }
+
+  .item-tp-bg{
+    --ion-background-color: primary;
+
+  }

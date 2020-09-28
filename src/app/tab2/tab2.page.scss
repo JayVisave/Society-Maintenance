@@ -5,6 +5,11 @@ ion-select {
     justify-content: end;
   }
 
+  ion-card {
+    justify-content: center;
+    padding: 2px;
+  }
+
 ion-title{
   font-size: small;
 }
@@ -34,4 +39,13 @@ ion-title{
   ion-select::part(icon) {
     color: var(--ion-color-primary);
     opacity: 1;
+  }
+
+  .white-card{
+    --ion-background-color: white;
+    
+  }
+
+  .item-tp-bg{
+    --ion-background-color: primary;
   }

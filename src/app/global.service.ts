@@ -27,7 +27,6 @@ export async function remove(key: string): Promise<void> {
 })
 export class GlobalService {
   public static userId;
-  complaintRef: AngularFireObject<any>;
 
   
 //   constructor(name, state, country) {

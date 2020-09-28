@@ -8,4 +8,55 @@
 
 <ion-content [fullscreen]="true">
   
+  <ion-card color= "primary">
+    <ion-item>
+      <ion-label>NOC type</ion-label>
+      <ion-select placeholder="Select One" okText="Confirm" cancelText="Cancel" [(ngModel)]="noc.noc_type" required>
+        <ion-select-option value="sell">Sell your property</ion-select-option>
+        <ion-select-option value="sublet">Sub-letting</ion-select-option>
+        <ion-select-option value="Loan">Home loan</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item >
+      <ion-label  position="stacked" >New owner's/tenant's name:</ion-label>
+      <ion-input type="text" [(ngModel)]="noc.name" required></ion-input>
+    </ion-item>
+  </ion-card>
+  <ion-card color="primary">
+    <ion-card-header>
+      <ion-card-title class="ion-text-center">Requested NOCs</ion-card-title>
+    </ion-card-header>
+  <ion-card class="white-card" *ngFor="let n of nocs">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item  >
+            <ion-label >NOC type:</ion-label>
+            </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item >
+            <ion-label>{{n.noc_type}}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+        <ion-item  >
+          <ion-label>New Owner/Tenant name:</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item >
+          <ion-label>{{n.name}}</ion-label>
+        </ion-item>
+      </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card></ion-card>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="request_noc(user)">
+      <ion-icon name="share"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

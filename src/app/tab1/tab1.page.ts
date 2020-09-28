@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { get, GlobalService } from '../global.service';
+import jsPDF from 'jspdf';
+import { UserDetails } from '../models/userDetails.model';
 // import { database } from 'firebase';
 // import { UserDetails } from '../models/userDetails.model';
 // import { mapToMapExpression } from '@angular/compiler/src/render3/util';
@@ -228,6 +230,27 @@ export class Tab1Page implements OnInit {
     }, 1000);
     
   }
+
+  downloadPDF(userDetails: UserDetails)
+  {
+    this.showToast("Download pdf option will be available soon");
+    // const doc = new jsPDF();
+    // const specialElementHandlers = {
+    //   '#editor': function (element, renderer) {
+    //     return true;
+    //   }
+    // };
+
+    // const pdfTable = this.pdfTable.nativeElement;
+
+    // doc.fromHTML(pdfTable.innerHTML, 15, 15, {
+    //   width: 190,
+    //   'elementHandlers': specialElementHandlers
+    // });
+
+    // doc.save('tableToPdf.pdf');
+  }
+
   showToast(message: string){
     this.toastCtrl.create({message: message,duration:3000,}).then(toastData => toastData.present());
   }

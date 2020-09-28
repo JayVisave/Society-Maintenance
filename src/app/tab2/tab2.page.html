@@ -7,40 +7,61 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-grid>
-    <ion-row>
-   <ion-col >
-     <ion-item >
-       <ion-label position="stacked" >E-mail</ion-label>
-       <ion-input #emailInput type="email" [(ngModel)]="user.email" required></ion-input>
-     </ion-item>
-     <ion-item >
-      <ion-label  position="stacked" >Full Name</ion-label>
-      <ion-input type="text" [(ngModel)]="complaint.name" required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Society</ion-label>
-      <ion-select placeholder="Select One" okText="Confirm" cancelText="Cancel" [(ngModel)]="complaint.society" required>
-        <ion-select-option value="Wakanda CHS.">Wakanda CHS.</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
+  <!-- <ion-refresher slot="fixed" (ionRefresh)="getCompliants($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher> -->
+  <ion-card color= "primary">
+     <ion-item>
       <ion-label>Complaint type</ion-label>
-      <ion-select placeholder="Select One"okText="Confirm" cancelText="Cancel" [(ngModel)]="complaint.comp_type" required>
-        <ion-select-option value="false">General</ion-select-option>
-        <ion-select-option value="true">Specific</ion-select-option>
+      <ion-select placeholder="Select One" okText="Confirm" cancelText="Cancel" [(ngModel)]="complaint.comp_type" required>
+        <ion-select-option value="Leakage">Leakage</ion-select-option>
+        <ion-select-option value="Parking">Parking issue</ion-select-option>
+        <ion-select-option value="Lift">Lift issue</ion-select-option>
+        <ion-select-option value="Security">Security</ion-select-option>
+        <ion-select-option value="Other">Other</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item >
       <ion-label  position="stacked" >Write your complaint</ion-label>
       <ion-input type="text" [(ngModel)]="complaint.issue" required></ion-input>
     </ion-item>
-  </ion-col>
-</ion-row>
-</ion-grid>
+  </ion-card>
+  <ion-card color="primary">
+    <ion-card-header>
+      <ion-card-title class="ion-text-center">Filed Complaints</ion-card-title>
+    </ion-card-header>
+  <ion-card class="white-card" *ngFor="let c of complaints">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item  >
+            <ion-label >complaint type:</ion-label>
+            </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item >
+            <ion-label>{{c.comp_type}}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+        <ion-item  >
+          <ion-label>Description</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item >
+          <ion-label>{{c.issue}}</ion-label>
+        </ion-item>
+      </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card></ion-card>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="file_Complaint(user,userDetails)">
+    <ion-fab-button (click)="file_Complaint(user)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
 </ion-content>

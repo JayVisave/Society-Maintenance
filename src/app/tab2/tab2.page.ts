@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
 import { ToastController, LoadingController, NavController } from '@ionic/angular';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { UserDetails } from '../models/userDetails.model';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { set } from '../global.service';
+import { get, GlobalService } from '../global.service';
 import { Complaint } from '../models/complaint.model';
+
 
 @Component({
   selector: 'app-tab2',
@@ -13,55 +12,74 @@ import { Complaint } from '../models/complaint.model';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page implements OnInit{
+  compe_type: any;
+  issue: any;
+  generationDate: string;
+  complaints: any;
 
   user = {} as User;
   complaint = {} as Complaint;
   constructor(
     private toastCtrl: ToastController, 
     private loadingCtrl : LoadingController,
-    private afAuth : AngularFireAuth,
-    private navCtrl : NavController,
     private fireStore : AngularFirestore,
   ) {}
   ngOnInit() {
-    
+    this.getComplaints(event);
   }
 
-  async file_Complaint(user: User,userDetails: UserDetails){
+  async getComplaints(event){
+    let loader = this.loadingCtrl.create({
+      message: "Please wait..."
+    });
+    (await loader).present();
+    try{
+      GlobalService.userId = await get("userId");
+      this.fireStore.collection("userDetails").doc(GlobalService.userId).collection("Complaint").snapshotChanges().subscribe( data=>{
+         this.complaints = data.map(e=>{
+          console.log("Type "+e.payload.doc.data()["type"]);
+          return{
+            comp_type: e.payload.doc.data()["comp_type"],
+            issue: e.payload.doc.data()["issue"],
+          }
+        })
+       })
+     }
+     catch(e)
+     {
+       this.showToast(e);
+     }
+    (await loader).dismiss();
+  }
+
+  async file_Complaint(user: User){
     if(this.formValidation()){
       let loader = this.loadingCtrl.create({
          message: "Please wait..."
        });
        (await loader).present();
        try{
-         
+        this.generationDate = Date.now().toString();
+        GlobalService.userId = await get("userId");
+        console.log("Global "+  GlobalService.userId);
+        this.fireStore.collection("userDetails").doc(GlobalService.userId).collection("Complaint").doc(this.generationDate).set({...this.complaint});
+        this.showToast("Your complaint was filed successfully.");
        }
-       finally{}
+       catch(e){
+        console.log(e);
+        this.showToast(e);
+        
+      }
+      (await loader).dismiss();
       }
   }
   formValidation(){
-    if(!this.user.email){
-      this.showToast("Enter Valid E-mail.");
-      return false;
-    }
-    if(!this.user.password){
-      this.showToast("Enter Valid Password.");
-      return false;
-    }
-    if(!this.complaint.name){
-      this.showToast("Enter Full Name.");
-      return false;
-    }
-    if(!this.complaint.society){
-      this.showToast("Select Resident Society.");
-      return false;
-    }
     if(!this.complaint.comp_type){
-      this.showToast("Select Category of Ownership.");
+      this.showToast("Select Category of Complaint.");
       return false;
     }
     if(!this.complaint.issue){
-      this.showToast("Select Type of Ownership.");
+      this.showToast("Please provide description for your complaint.");
       return false;
     }
 
