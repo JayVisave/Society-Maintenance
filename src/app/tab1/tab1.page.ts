@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { get, GlobalService } from '../global.service';
-import jsPDF from 'jspdf';
+//import jsPDF from 'jspdf';
 import { UserDetails } from '../models/userDetails.model';
 // import { database } from 'firebase';
 // import { UserDetails } from '../models/userDetails.model';
@@ -52,7 +52,7 @@ export class Tab1Page implements OnInit {
  // ionViewWillEnter(){}
   async getUserDetails(event){
     let loader = this.loadingCtrl.create({
-      message: "Please wait..."
+      message: 'Please wait...'
     });
     (await loader).present();
     try{
@@ -60,9 +60,9 @@ export class Tab1Page implements OnInit {
       this.nocGenerated = 0;
       this.hasComplaints = 0;
       // var day = generationDate.getDay();
-      GlobalService.userId = await get("userId");
-      console.log("Global "+  GlobalService.userId);
-  
+      GlobalService.userId = await get('userId');
+      console.log('Global ' +  GlobalService.userId);
+
       // this.fireStore.firestore.collection('comments').doc('').get().then(snapshot => {
       //   snapshot.docs.forEach(doc => {
       //     const comment = doc.data()
@@ -73,28 +73,28 @@ export class Tab1Page implements OnInit {
       //   })
       // })
 
-      this.fireStore.firestore.collection("userDetails").doc(GlobalService.userId).get()
-      .then(doc=>{
-        console.log("Document data:", doc.data()["societyName"]);
-        this.parkingNumber =  doc.data()["parkingVehicles"];
-        this.isCommercial = doc.data()["isCommercial"];
-        this.isOwner = doc.data()["isOwner"];
-        
+      this.fireStore.firestore.collection('userDetails').doc(GlobalService.userId).get()
+      .then(doc => {
+        console.log('Document data:', doc.data()['societyName']);
+        this.parkingNumber =  doc.data()['parkingVehicles'];
+        this.isCommercial = doc.data()['isCommercial'];
+        this.isOwner = doc.data()['isOwner'];
+
         // const comment = doc.data();   // get data in result variable
         // this.items = JSON.stringify(comment); // then convert data to json string
-        // console.log("Items "+this.items); 
+        // console.log("Items "+this.items);
         // this.allData = JSON.parse(this.items); // parse json data and pass json string
         // console.log("all data "+this.allData["isCommercial"]); // got result of particular string
         //map(data=>{});
         this.userDetails =  [doc.data()].map(e => {
           return{
-            name: e["name"],
-            sname: e["societyName"],
-            parking: e["parkingVehicles"],
-        
-          }
+            name: e['name'],
+            sname: e['societyName'],
+            parking: e['parkingVehicles'],
+
+          };
         });
-        console.log("Outside :", this.userDetails["sname"]);
+        console.log('Outside :', this.userDetails['sname']);
         // console.log("Outside :",this.userDetails.sname);
         // this.userDetails.sname = JSON.stringify(doc.data()["isCommercial"]);
         //  console.log("Outside :",this.userDetails.sname); // got result of particular string
@@ -102,94 +102,98 @@ export class Tab1Page implements OnInit {
         // this.userDetails.parking = this.allData["parkingVehicles"];
         });
 
-      this.fireStore.firestore.collection("society").doc("sFxpx7WgYy9ojV4pzgvJ").get()
-      .then(doc=>{
+      this.fireStore.firestore.collection('society').doc('sFxpx7WgYy9ojV4pzgvJ').get()
+      .then(doc => {
+        // tslint:disable-next-line: prefer-const
         var generationDate = new Date();
         this.todaysyear = generationDate.getFullYear().toString();
-        this.todaysmonth =generationDate.toLocaleString('default', { month: 'short' });
+        this.todaysmonth = generationDate.toLocaleString('default', { month: 'short' });
         this.todaysmonthNumber = generationDate.getMonth();
-        if(this.isCommercial == "true"){
-          this.catUser = doc.data()["commercial"]
+        // tslint:disable-next-line: triple-equals
+        if (this.isCommercial == 'true'){
+          this.catUser = doc.data()['commercial'];
         }
         else{
-          this.catUser = doc.data()["normal"]
+          this.catUser = doc.data()['normal'];
         }
-        if(this.isOwner == "true"){
-          this.typeUser = doc.data()["owner"]
+        if (this.isOwner == 'true'){
+          this.typeUser = doc.data()['owner'];
         }
         else{
-          this.typeUser = doc.data()["tenant"]
+          this.typeUser = doc.data()['tenant'];
         }
-        this.sum = this.typeUser + this.catUser + doc.data()["water"] + doc.data()["structure"] + doc.data()["complaint"] + doc.data()["parking"] + doc.data()["noc"] + doc.data()["event"] + doc.data()["interest"]
+        this.sum = this.typeUser + this.catUser + doc.data()['water'] + doc.data()['structure'] + doc.data()['complaint'] + doc.data()['parking'] + doc.data()['noc'] + doc.data()['event'] + doc.data()['interest'];
         this.societyDetails =  [doc.data()].map(e => {
           return{
             type: this.typeUser,
             category : this.catUser,
-            water : e["water"],
-            struct: e["structure"],
-            parking : e["parking"] *  this.parkingNumber,
-            complaint : e["complaint"] * this.hasComplaints,
-            noc : e["noc"] * this.nocGenerated,
-            interest : e["interest"],
-            sname : e["name"],
-            event : e["event"],
+            water : e['water'],
+            struct: e['structure'],
+            parking : e['parking'] *  this.parkingNumber,
+            complaint : e['complaint'] * this.hasComplaints,
+            noc : e['noc'] * this.nocGenerated,
+            interest : e['interest'],
+            sname : e['name'],
+            event : e['event'],
             billsum : this.sum,
             month: this.todaysmonth,
             year: this.todaysyear,
             monthNumber: this.todaysmonthNumber,
-          }
-          
+          };
+
         });
-        this.fireStore.collection("userDetails").doc(GlobalService.userId).collection("bills").doc(this.todaysmonth+" "+this.todaysyear).set({...this.societyDetails[0]});
-        this.fireStore.collection("userDetails").doc(GlobalService.userId).collection("bills", ref=> ref.orderBy('monthNumber','desc')).snapshotChanges().subscribe( data=>{
+        // tslint:disable-next-line: max-line-length
+        this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('bills').doc(this.todaysmonth + ' ' + this.todaysyear).set({...this.societyDetails[0]});
+        // tslint:disable-next-line: max-line-length
+        this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('bills', ref => ref.orderBy('monthNumber', 'desc')).snapshotChanges().subscribe( data => {
           this.bills = data.map(e => {
-            console.log("Type "+e.payload.doc.data()["type"]);
-          return{
-            type: e.payload.doc.data()["type"],
-            category : e.payload.doc.data()["category"],
-            water : e.payload.doc.data()["water"],
-            struct: e.payload.doc.data()["struct"],
-            parking : e.payload.doc.data()["parking"],
-            complaint : e.payload.doc.data()["complaint"],
-            noc : e.payload.doc.data()["noc"],
-            interest : e.payload.doc.data()["interest"],
-            sname : e.payload.doc.data()["sname"],
-            event : e.payload.doc.data()["event"],
-            billsum :  e.payload.doc.data()["billsum"],
-            month:  e.payload.doc.data()["month"],
-            year:  e.payload.doc.data()["year"],
-          }
-          })
-        })
-      
+            console.log('Type ' + e.payload.doc.data()['type']);
+            return{
+            type: e.payload.doc.data()['type'],
+            category : e.payload.doc.data()['category'],
+            water : e.payload.doc.data()['water'],
+            struct: e.payload.doc.data()['struct'],
+            parking : e.payload.doc.data()['parking'],
+            complaint : e.payload.doc.data()['complaint'],
+            noc : e.payload.doc.data()['noc'],
+            interest : e.payload.doc.data()['interest'],
+            sname : e.payload.doc.data()['sname'],
+            event : e.payload.doc.data()['event'],
+            billsum :  e.payload.doc.data()['billsum'],
+            month:  e.payload.doc.data()['month'],
+            year:  e.payload.doc.data()['year'],
+          };
+          });
+        });
+
         //let sum = this.bills.reduce((acc, cur) => acc + cur, 0);
         // console.log("pasking : " + this.parkingNumber);
-       
+
         // this.bills.map(data=>{
         //   console.log("pasking : "+data["parking"])
         //   data["parking"] = data["parking"]+100;
         //   console.log("pasking : "+data["parking"])
         // })
-      
-      
+
+
         });
 
-     
-       
-   
 
-        
+
+
+
+
          // this.allData.forEach(e=>{
         //   console.log("Gotten data ",e);
         // }
         // );
-        
+
         // this.items = JSON.stringify(this.result); // then convert data to json string
-        // console.log(this.items); 
+        // console.log(this.items);
         // this.allData = JSON.parse(this.items); // parse json data and pass json string
         // console.log(this.allData['Message']); // got result of particular string
       // });
-      
+
       // .then(function(doc){
       //   if (doc.exists) {
       //     console.log("Document data:", doc.data());
@@ -219,21 +223,21 @@ export class Tab1Page implements OnInit {
         //   }
       //   })
       // });
-    (await loader).dismiss();
+      (await loader).dismiss();
     }
-    catch(e){
+    catch (e){
       this.showToast(e);
     }
     setTimeout(() => {
-     
+
       event.target.complete();
     }, 1000);
-    
+
   }
 
   downloadPDF(userDetails: UserDetails)
   {
-    this.showToast("Download pdf option will be available soon");
+    this.showToast('Download pdf option will be available soon');
     // const doc = new jsPDF();
     // const specialElementHandlers = {
     //   '#editor': function (element, renderer) {
@@ -252,6 +256,6 @@ export class Tab1Page implements OnInit {
   }
 
   showToast(message: string){
-    this.toastCtrl.create({message: message,duration:3000,}).then(toastData => toastData.present());
+    this.toastCtrl.create({message: message, duration: 3000, }).then(toastData => toastData.present());
   }
 }

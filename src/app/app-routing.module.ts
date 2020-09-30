@@ -27,7 +27,15 @@ const routes: Routes = [
   {
     path: 'welcome',
     loadChildren: () => import('./welcome/welcome.module').then( m => m.WelcomePageModule)
+  },  {
+    path: 'admin-tab1',
+    loadChildren: () => import('./admin-tab1/admin-tab1.module').then( m => m.AdminTab1PageModule)
+  },
+  {
+    path: 'admin-tab2',
+    loadChildren: () => import('./admin-tab2/admin-tab2.module').then( m => m.AdminTab2PageModule)
   }
+
 
   
 ];
