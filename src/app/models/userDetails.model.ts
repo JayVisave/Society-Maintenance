@@ -4,5 +4,7 @@ export interface UserDetails{
     isCommercial : string,
     isOwner : string,
     parkingVehicles : number,
+    wing: string,
+    flatNumber: number,
 
 }

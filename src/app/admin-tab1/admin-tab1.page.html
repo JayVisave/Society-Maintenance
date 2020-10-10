@@ -17,6 +17,7 @@
     </ion-card-header>
     <ion-item color="dark">
       <ion-label>Users</ion-label>
+      <ion-label slot="end">Wing-Flat</ion-label>
       <!-- <ion-label>Bill Details</ion-label> -->
      <!-- <ion-label>Bill Details</ion-label>-->
     </ion-item> 
@@ -27,6 +28,7 @@
       <ion-item-sliding *ngFor="let user of users">
         <ion-item>
           <ion-label>{{user.name}}</ion-label>
+          <ion-label slot="end">{{user.wing}}-{{user.flat}}</ion-label>
         </ion-item>
         <ion-item-options side="end">
           <ion-item-option color="danger" (click)="deleteUser(user)"><ion-icon name="trash-sharp"></ion-icon></ion-item-option>

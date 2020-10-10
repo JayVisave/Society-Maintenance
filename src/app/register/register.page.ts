@@ -50,6 +50,8 @@ export class RegisterPage implements OnInit {
             this.fireStore.collection('userDetails').doc(data.user.uid).set({...userDetails});
             this.societyUser.name= userDetails.name;
             this.societyUser.u_id = data.user.uid;
+            this.societyUser.flat = userDetails.flatNumber;
+            this.societyUser.wing = userDetails.wing;
             this.fireStore.collection('society').doc('sFxpx7WgYy9ojV4pzgvJ').collection('users').doc(data.user.uid).set({...this.societyUser});
           });
         await this.afAuth

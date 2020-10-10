@@ -28,6 +28,24 @@
             </ion-select>
           </ion-item>
           <ion-item>
+            <ion-label>Wing</ion-label>
+            <ion-select placeholder="Select One" okText="Confirm" cancelText="Cancel" [(ngModel)]="userDetails.wing" required>
+              <ion-select-option value="A">A</ion-select-option>
+              <ion-select-option value="B">B</ion-select-option>
+              <ion-select-option value="C">C</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Flat</ion-label>
+            <ion-select placeholder="Select One" okText="Confirm" cancelText="Cancel" [(ngModel)]="userDetails.flatNumber" required>
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+              <ion-select-option value="4">4</ion-select-option>
+              <ion-select-option value="5">5</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
             <ion-label>Category</ion-label>
             <ion-select placeholder="Select One"okText="Confirm" cancelText="Cancel" [(ngModel)]="userDetails.isCommercial" required>
               <ion-select-option value="false">Normal</ion-select-option>

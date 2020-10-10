@@ -64,6 +64,8 @@ export class AdminTab1Page implements OnInit {
       return{
       name: e.payload.doc.data().name,
       id: e.payload.doc.data().u_id,
+      flat: e.payload.doc.data().flat,
+      wing: e.payload.doc.data().wing,
 
     };
     });
