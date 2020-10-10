@@ -1,3 +1,4 @@
+import { SocietyUser } from './../models/societyUser.model';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
 import { ToastController, LoadingController, NavController } from '@ionic/angular';
@@ -16,6 +17,7 @@ export class RegisterPage implements OnInit {
 
   user = {} as User;
   userDetails = {} as UserDetails;
+  societyUser = {} as SocietyUser;
   constructor(
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
@@ -34,6 +36,7 @@ export class RegisterPage implements OnInit {
         });
        (await loader).present();
        try{
+         
         await this.afAuth
           .createUserWithEmailAndPassword(user.email, user.password)
           .then(data => {
@@ -45,6 +48,9 @@ export class RegisterPage implements OnInit {
               set('userId', data.user.uid);
             }
             this.fireStore.collection('userDetails').doc(data.user.uid).set({...userDetails});
+            this.societyUser.name= userDetails.name;
+            this.societyUser.u_id = data.user.uid;
+            this.fireStore.collection('society').doc('sFxpx7WgYy9ojV4pzgvJ').collection('users').doc(data.user.uid).set({...this.societyUser});
           });
         await this.afAuth
           .signInWithEmailAndPassword(user.email, user.password)
