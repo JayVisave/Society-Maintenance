@@ -15,7 +15,9 @@ export class AdminTab2Page implements OnInit {
   compe_type: any;
   issue: any;
   generationDate: string;
-  complaints: any;
+  allComplaints: any;
+  currentComplaint: any;
+
 
   user = {} as User;
   complaint = {} as Complaint;
@@ -25,25 +27,37 @@ export class AdminTab2Page implements OnInit {
     private fireStore : AngularFirestore,
   ) {}
   ngOnInit() {
-    this.getComplaints(event);
+    this.getAllComplaints(event);
   }
 
-  async getComplaints(event){
+  async getAllComplaints(event){
     let loader = this.loadingCtrl.create({
       message: 'Please wait...'
     });
     (await loader).present();
     try{
-      GlobalService.userId = await get('userId');
-      this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('Complaint').snapshotChanges().subscribe( data => {
-         this.complaints = data.map(e => {
-          console.log('Type ' + e.payload.doc.data()['type']);
-          return{
-            comp_type: e.payload.doc.data()['comp_type'],
-            issue: e.payload.doc.data()['issue'],
-          }
-        })
+      // ref => ref.where("no_of_comp",">",0)
+      // this.fireStore.collection('userDetails').valueChanges().
+      this.fireStore.collection('userDetails', ref => ref.where("no_of_comp",">",0)).snapshotChanges().subscribe( data => {
+        this.allComplaints = data.map(e => {
+         console.log('Type ' + e.payload.doc.data()['type']);
+         return{
+           comp_type: e.payload.doc.data()['complaint.comp_type'],
+           issue: e.payload.doc.data()['complaint.issue'],
+         }
        })
+      })
+      // this.fireStore.collection('society').doc('sFxpx7WgYy9ojV4pzgvJ').collection('users').snapshotChanges().subscribe( data => {
+      //    this.allComplaints = data.map(e => {
+      //     console.log('Type ' + e.payload.doc.data()['type']);
+      //     return{
+      //       name: e.payload.doc.data()['name'],
+      //       wing: e.payload.doc.data()['wing'],
+      //       flat: e.payload.doc.data()['flat'],
+      //     }
+      //   })
+      //  })
+      
      }
      catch (e)
      {
@@ -52,7 +66,7 @@ export class AdminTab2Page implements OnInit {
     (await loader).dismiss();
   }
 
-  async file_Complaint(user: User){
+  async resolveComplaint(user: User){
     if (this.formValidation()){
       let loader = this.loadingCtrl.create({
          message: 'Please wait...'

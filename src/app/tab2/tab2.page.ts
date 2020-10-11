@@ -41,6 +41,7 @@ export class Tab2Page implements OnInit{
           return{
             comp_type: e.payload.doc.data()['comp_type'],
             issue: e.payload.doc.data()['issue'],
+            isSolved: e.payload.doc.data()['isSolved'],
           }
         })
        })
@@ -62,6 +63,7 @@ export class Tab2Page implements OnInit{
         this.generationDate = Date.now().toString();
         GlobalService.userId = await get('userId');
         console.log('Global '+  GlobalService.userId);
+        this.complaint.isSolved = "Unsolved";
         this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('Complaint').doc(this.generationDate).set({...this.complaint});
         this.showToast('Your complaint was filed successfully.');
        }

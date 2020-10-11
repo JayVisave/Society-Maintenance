@@ -6,5 +6,6 @@ export interface UserDetails{
     parkingVehicles : number,
     wing: string,
     flatNumber: number,
-
+    no_of_comp: number,
+    no_of_noc: number
 }
