@@ -4,6 +4,7 @@ import { User } from '../models/user.model';
 import { ToastController, LoadingController, NavController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { get, GlobalService } from '../global.service';
+import * as firebase from 'firebase';
 
 
 @Component({
@@ -59,6 +60,8 @@ export class Tab3Page {
         GlobalService.userId = await get("userId");
         console.log("Global "+  GlobalService.userId);
         this.fireStore.collection("userDetails").doc(GlobalService.userId).collection("NOC").doc(this.generationDate).set({...this.noc});
+        const increment = firebase.firestore.FieldValue.increment(1);
+        this.fireStore.collection('userDetails').doc(GlobalService.userId).update({"no_of_noc": increment});
         this.showToast("Your request for NOC has been sent to the office.");
       }
       catch(e)

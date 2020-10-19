@@ -38,25 +38,25 @@ export class AdminTab2Page implements OnInit {
     try{
       // ref => ref.where("no_of_comp",">",0)
       // this.fireStore.collection('userDetails').valueChanges().
-      this.fireStore.collection('userDetails', ref => ref.where("no_of_comp",">",0)).snapshotChanges().subscribe( data => {
-        this.allComplaints = data.map(e => {
-         console.log('Type ' + e.payload.doc.data()['type']);
-         return{
-           comp_type: e.payload.doc.data()['complaint.comp_type'],
-           issue: e.payload.doc.data()['complaint.issue'],
-         }
-       })
-      })
-      // this.fireStore.collection('society').doc('sFxpx7WgYy9ojV4pzgvJ').collection('users').snapshotChanges().subscribe( data => {
-      //    this.allComplaints = data.map(e => {
-      //     console.log('Type ' + e.payload.doc.data()['type']);
-      //     return{
-      //       name: e.payload.doc.data()['name'],
-      //       wing: e.payload.doc.data()['wing'],
-      //       flat: e.payload.doc.data()['flat'],
-      //     }
-      //   })
+      // this.fireStore.collection('userDetails', ref => ref.where("no_of_comp",">",0)).snapshotChanges().subscribe( data => {
+      //   this.allComplaints = data.map(e => {
+      //    console.log('Type ' + e.payload.doc.data()['type']);
+      //    return{
+      //      comp_type: e.payload.doc.data()['complaint.comp_type'],
+      //      issue: e.payload.doc.data()['complaint.issue'],
+      //    }
       //  })
+      // })
+      this.fireStore.collection('society').doc('sFxpx7WgYy9ojV4pzgvJ').collection('users', ref => ref.where("no_of_com",">",0)).snapshotChanges().subscribe( data => {
+         this.allComplaints = data.map(e => {
+          console.log('Type ' + e.payload.doc.data()['type']);
+          return{
+            name: e.payload.doc.data()['name'],
+            wing: e.payload.doc.data()['wing'],
+            flat: e.payload.doc.data()['flat'],
+          }
+        })
+       })
       
      }
      catch (e)
