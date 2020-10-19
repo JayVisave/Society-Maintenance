@@ -76,15 +76,15 @@ export class Tab2Page implements OnInit{
         this.userDetails =  [doc.data()].map(e => {
           return{
             name: e['name'],
-            sname: e['societyName'],
-            parking: e['parkingVehicles'],
+            flat: e['flatNumber'],
+            wing: e['wing'],
 
           };
        
         });
-        this.societyComplaint.name = this.name;
-        this.societyComplaint.flat = this.flat;
-        this.societyComplaint.wing = this.wing;
+        this.societyComplaint.name = this.userDetails[0]['name'];
+        this.societyComplaint.flat = this.userDetails[0]['flat'];
+        this.societyComplaint.wing = this.userDetails[0]['wing'];
         this.societyComplaint.comp_type = this.complaint.comp_type;
         this.societyComplaint.issue = this.complaint.issue;
         this.societyComplaint.isSolved = this.complaint.isSolved;
