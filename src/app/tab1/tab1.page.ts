@@ -94,7 +94,7 @@ export class Tab1Page implements OnInit {
 
           };
         });
-        console.log('Outside :', this.userDetails['sname']);
+        console.log('Outside :', this.userDetails[0]['sname']);
         // console.log("Outside :",this.userDetails.sname);
         // this.userDetails.sname = JSON.stringify(doc.data()["isCommercial"]);
         //  console.log("Outside :",this.userDetails.sname); // got result of particular string
