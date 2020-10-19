@@ -82,6 +82,7 @@ export class Tab2Page implements OnInit{
           };
        
         });
+        this.complaint.isSolved = "Unsolved";
         this.societyComplaint.name = this.userDetails[0]['name'];
         this.societyComplaint.flat = this.userDetails[0]['flat'];
         this.societyComplaint.wing = this.userDetails[0]['wing'];
@@ -92,7 +93,7 @@ export class Tab2Page implements OnInit{
         });
 
         console.log('name '+ this.name);
-        this.complaint.isSolved = "Unsolved";
+
         this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('Complaint').doc(this.generationDate).set({...this.complaint});
         this.fireStore.collection('society').doc('sFxpx7WgYy9ojV4pzgvJ').collection('users').doc(GlobalService.userId).collection('Complaint').doc(this.generationDate).set({...this.complaint});
      
