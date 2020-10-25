@@ -1,6 +1,7 @@
 export interface UserDetails{
     name: string,
     societyName : string,
+    societyID: string,
     isCommercial : string,
     isOwner : string,
     parkingVehicles : number,

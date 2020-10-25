@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Plugins } from "@capacitor/core";
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
 
 const { Storage } = Plugins;
 
@@ -27,6 +26,7 @@ export async function remove(key: string): Promise<void> {
 })
 export class GlobalService {
   public static userId;
+  public static societyId;
 
   
 //   constructor(name, state, country) {

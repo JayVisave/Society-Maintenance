@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Society</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!--<form name="registerForm" (ngSubmit)="register(society,societyDetails)"> -->
+    <ion-grid>
+         <ion-row>
+        <ion-col >
+          <ion-item >
+            <ion-label position="stacked" >Name</ion-label>
+            <ion-input #nameInput type="text" [(ngModel)]="society.name" required></ion-input>
+          </ion-item>
+          <ion-item >
+            <ion-label  position="stacked" >Commercial</ion-label>
+            <ion-input #commercialInput type="number" [(ngModel)]="society.commercial" required></ion-input>
+          </ion-item>
+          <ion-item >
+            <ion-label  position="stacked" >Normal</ion-label>
+            <ion-input #normalInput type="number" [(ngModel)]="society.normal" required></ion-input>
+          </ion-item>
+          <ion-item >
+            <ion-label  position="stacked" >Owner</ion-label>
+            <ion-input #ownerInput type="number" [(ngModel)]="society.owner" required></ion-input>
+          </ion-item>
+          <ion-item >
+            <ion-label  position="stacked" >Tenant</ion-label>
+            <ion-input #tenantInput type="number" [(ngModel)]="society.tenant" required></ion-input>
+          </ion-item>
+          <ion-item >
+            <ion-label  position="stacked" >NOC</ion-label>
+            <ion-input #nocInput type="number" [(ngModel)]="society.noc" required></ion-input>
+          </ion-item>
+          <ion-item >
+            <ion-label  position="stacked" >Parking</ion-label>
+            <ion-input #parkingInput type="number" [(ngModel)]="society.parking" required></ion-input>
+          </ion-item>
+          <ion-item >
+            <ion-label  position="stacked" >Water</ion-label>
+            <ion-input #waterInput type="number" [(ngModel)]="society.water" required></ion-input>
+          </ion-item>
+          <ion-item >
+            <ion-label  position="stacked" >Structure</ion-label>
+            <ion-input #structureInput type="number" [(ngModel)]="society.structure" required></ion-input>
+          </ion-item>
+          <ion-item >
+            <ion-label  position="stacked" >Event</ion-label>
+            <ion-input #eventInput type="number" [(ngModel)]="society.event" required></ion-input>
+          </ion-item>
+          <ion-item >
+            <ion-label  position="stacked" >Interest</ion-label>
+            <ion-input #interestInput type="number" [(ngModel)]="society.interest" required></ion-input>
+          </ion-item>
+          <ion-item >
+            <ion-label  position="stacked" >Complaint</ion-label>
+            <ion-input #complaintInput type="number" [(ngModel)]="society.complaint" required></ion-input>
+          </ion-item>
+          <ion-item >
+            <ion-label  position="stacked" >Wings</ion-label>
+            <ion-input #wingsInput type="number" [(ngModel)]="society.wings" required></ion-input>
+          </ion-item>
+          <ion-item >
+            <ion-label  position="stacked" >Flats Per Wing</ion-label>
+            <ion-input #flatsPerWingInput type="number" [(ngModel)]="society.flatsPerWing" required></ion-input>
+          </ion-item>
+         
+        
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+         <!-- <ion-button class="ion-padding" color="primary" expand="full" [routerLink]="['/register']" type="submit" >Sign Up</ion-button>
+          -->
+          <ion-button class="ion-padding" color="primary" expand="full" [routerLink]="['/admin-tab3']" (click)="register(society)">Create Society</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  <!--</form> -->
+  </ion-content>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { get, GlobalService } from '../global.service';
+import { get, GlobalService, set } from '../global.service';
 //import jsPDF from 'jspdf';
 import { UserDetails } from '../models/userDetails.model';
 // import { database } from 'firebase';
@@ -61,6 +61,7 @@ export class Tab1Page implements OnInit {
       this.hasComplaints = 0;
       // var day = generationDate.getDay();
       GlobalService.userId = await get('userId');
+      GlobalService.societyName = await get('societyName');
       console.log('Global ' +  GlobalService.userId);
 
       // this.fireStore.firestore.collection('comments').doc('').get().then(snapshot => {
@@ -79,6 +80,8 @@ export class Tab1Page implements OnInit {
         this.parkingNumber =  doc.data()['parkingVehicles'];
         this.isCommercial = doc.data()['isCommercial'];
         this.isOwner = doc.data()['isOwner'];
+ 
+        set('societyID',doc.data()['societyID'])
 
         // const comment = doc.data();   // get data in result variable
         // this.items = JSON.stringify(comment); // then convert data to json string
@@ -101,8 +104,8 @@ export class Tab1Page implements OnInit {
         // this.userDetails.name = this.allData["name"];
         // this.userDetails.parking = this.allData["parkingVehicles"];
         });
-
-      this.fireStore.firestore.collection('society').doc('sFxpx7WgYy9ojV4pzgvJ').get()
+        GlobalService.societyId  = await get('societyID');
+      this.fireStore.firestore.collection('society').doc(GlobalService.societyId).get()
       .then(doc => {
         // tslint:disable-next-line: prefer-const
         var generationDate = new Date();

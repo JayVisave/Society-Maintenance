@@ -18,6 +18,13 @@ export class RegisterPage implements OnInit {
   user = {} as User;
   userDetails = {} as UserDetails;
   societyUser = {} as SocietyUser;
+  societyNames : any;
+
+  public indexesWing: any = [];
+  public indexesFlat: any = [];
+  public tempSocietyName: string;
+  public flats: string;
+  possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   constructor(
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
@@ -26,7 +33,82 @@ export class RegisterPage implements OnInit {
     private fireStore: AngularFirestore,
     ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.getSocietyDetails(event);
+    
+  }
+  async getSocietyDetails(event){
+    const loader = this.loadingCtrl.create({
+      message: 'Please wait...'
+    });
+    (await loader).present();
+    try{
+    this.fireStore.collection('society').snapshotChanges().subscribe(data => {
+      this.societyNames = data.map(e=>{
+        return{
+          name: e.payload.doc.data()['name'],
+          wings: e.payload.doc.data()['wings'],
+          flats: e.payload.doc.data()['flatsPerWing'],
+          id: e.payload.doc.data()['id']
+        }
+      })
+    });
+    (await loader).dismiss();
+  }
+  catch (e){
+    this.showToast(e);
+  }
+  setTimeout(() => {
+
+    event.target.complete();
+  }, 1000);
+  }
+  async fetchWings(tempID : any){
+    console.log("index  "+tempID);
+    const loader = this.loadingCtrl.create({
+      message: 'Please wait...'
+    });
+    (await loader).present();
+    try{
+    this.fireStore.firestore.collection('society').doc(tempID).get().then(data => {
+      this.indexesWing= [];
+      this.tempSocietyName = data.data()['name'];
+      this.flats = data.data()['flatsPerWing'];
+      // console.log("runs  ");
+      for(let i =0;i< parseInt(data.data()['wings']);i++){
+        console.log("index "+i);
+        this.indexesWing.push(i);
+
+
+      }
+    });
+    (await loader).dismiss();
+  }
+  catch (e){
+    this.showToast(e);
+  }
+
+  }
+  async fetchFlats(tempID : any){
+    console.log("index  "+tempID);
+    const loader = this.loadingCtrl.create({
+      message: 'Please wait...'
+    });
+    (await loader).present();
+    try{
+      this.indexesFlat= [];
+      // console.log("runs  ");
+      for(let i =0;i< parseInt(this.flats);i++){
+        console.log("index  "+i);
+        this.indexesFlat.push(i+1);
+        
+      }
+
+    (await loader).dismiss();
+  }
+  catch (e){
+    this.showToast(e);
+  }
 
   }
   async register(user: User, userDetails: UserDetails){
@@ -46,15 +128,18 @@ export class RegisterPage implements OnInit {
             }
             else{
               set('userId', data.user.uid);
+              
             }
             this.userDetails.no_of_comp = 0;
             this.userDetails.no_of_noc =0;
+            this.userDetails.societyName = this.tempSocietyName;
             this.fireStore.collection('userDetails').doc(data.user.uid).set({...userDetails});
             // this.societyUser.name= userDetails.name;
             // this.societyUser.u_id = data.user.uid;
             // this.societyUser.flat = userDetails.flatNumber;
             // this.societyUser.wing = userDetails.wing;
-            this.fireStore.collection('society').doc('sFxpx7WgYy9ojV4pzgvJ').collection('users').doc(data.user.uid).set({...userDetails});
+           
+            this.fireStore.collection('society').doc(userDetails.societyID).collection('users').doc(data.user.uid).set({...userDetails});
           });
         await this.afAuth
           .signInWithEmailAndPassword(user.email, user.password)

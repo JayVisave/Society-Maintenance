@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
 import { ToastController, LoadingController, NavController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { get, GlobalService, set } from '../global.service';
 @Component({
   selector: 'app-login',
@@ -13,7 +14,9 @@ user = {} as User;
   constructor(private toastCtrl: ToastController,
               private loadingCtrl: LoadingController,
               private afAuth: AngularFireAuth,
-              private navCtrl: NavController) { }
+              private navCtrl: NavController,
+              private fireStore: AngularFirestore,
+              ) { }
 
   ngOnInit() {
     GlobalService.userId = get('userId');
@@ -38,6 +41,7 @@ user = {} as User;
             set('userId', data.user.uid);
             this.navCtrl.navigateRoot('/tabs');
           }
+
         });
 
       }
