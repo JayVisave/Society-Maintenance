@@ -61,7 +61,7 @@ export class Tab1Page implements OnInit {
       this.hasComplaints = 0;
       // var day = generationDate.getDay();
       GlobalService.userId = await get('userId');
-      GlobalService.societyName = await get('societyName');
+     
       console.log('Global ' +  GlobalService.userId);
 
       // this.fireStore.firestore.collection('comments').doc('').get().then(snapshot => {
@@ -81,7 +81,7 @@ export class Tab1Page implements OnInit {
         this.isCommercial = doc.data()['isCommercial'];
         this.isOwner = doc.data()['isOwner'];
  
-        set('societyID',doc.data()['societyID'])
+        set('societyID',doc.data()['societyID']);
 
         // const comment = doc.data();   // get data in result variable
         // this.items = JSON.stringify(comment); // then convert data to json string

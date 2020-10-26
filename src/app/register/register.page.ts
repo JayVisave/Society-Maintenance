@@ -176,10 +176,7 @@ export class RegisterPage implements OnInit {
       this.showToast('Enter Full Name.');
       return false;
     }
-    if (!this.userDetails.societyName){
-      this.showToast('Select Resident Society.');
-      return false;
-    }
+
     if (!this.userDetails.isCommercial){
       this.showToast('Select Category of Ownership.');
       return false;
