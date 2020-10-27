@@ -9,10 +9,20 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher> -->
   <!-- <ion-card color="primary" *ngFor="let bill of bills" > -->
+    <ion-list>
+      <ion-item>
+        <ion-label>Society</ion-label>
+        <ion-select placeholder="Select One" okText="Confirm" cancelText="Cancel" [(ngModel)]="societyID" (ngModelChange)="getUserDetails(societyID)" required>
+         <ion-select-option value="{{society.id}}" *ngFor="let society of societyNames">{{society.name}}</ion-select-option>
+         <!-- <ion-select-option value="wanak">asdsa</ion-select-option> -->
+      </ion-select>
+      </ion-item>
+
+    </ion-list>
     <ion-card color="primary" > 
    
     <ion-card-header>
-      <ion-card-title class="ion-text-center">Society Name</ion-card-title>
+      <ion-card-title class="ion-text-center" >{{societyName}}</ion-card-title>
   
     </ion-card-header>
     <ion-item color="dark">
@@ -31,7 +41,7 @@
           <ion-label slot="end">{{user.wing}}-{{user.flat}}</ion-label>
         </ion-item>
         <ion-item-options side="end">
-          <ion-item-option color="danger" (click)="deleteUser(user)"><ion-icon name="trash-sharp"></ion-icon></ion-item-option>
+          <ion-item-option color="danger" (click)="deleteUser(user, societyID)"><ion-icon name="trash-sharp"></ion-icon></ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     
