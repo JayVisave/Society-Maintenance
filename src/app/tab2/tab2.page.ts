@@ -43,6 +43,7 @@ export class Tab2Page implements OnInit{
     (await loader).present();
     try{
       GlobalService.userId = await get('userId');
+      GlobalService.societyId = await get('societyID');
       this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('Complaint').snapshotChanges().subscribe( data=>{
          this.complaints = data.map(e=>{
           console.log('Type '+e.payload.doc.data()['type']);
@@ -70,6 +71,7 @@ export class Tab2Page implements OnInit{
        try{
         this.generationDate = Date.now().toString();
         GlobalService.userId = await get('userId');
+        GlobalService.societyId = await get('societyID');
         console.log('Global '+  GlobalService.userId);
         this.fireStore.firestore.collection('userDetails').doc(GlobalService.userId).get()
       .then(doc => {
@@ -82,6 +84,9 @@ export class Tab2Page implements OnInit{
           };
        
         });
+
+        this.complaint.u_id = GlobalService.userId;
+        this.complaint.c_id = this.fireStore.createId();
         this.complaint.isSolved = "Unsolved";
         this.societyComplaint.name = this.userDetails[0]['name'];
         this.societyComplaint.flat = this.userDetails[0]['flat'];
@@ -89,17 +94,19 @@ export class Tab2Page implements OnInit{
         this.societyComplaint.comp_type = this.complaint.comp_type;
         this.societyComplaint.issue = this.complaint.issue;
         this.societyComplaint.isSolved = this.complaint.isSolved;
-        this.fireStore.collection('society').doc('sFxpx7WgYy9ojV4pzgvJ').collection('Complaints').add({...this.societyComplaint});
+        this.societyComplaint.u_id = GlobalService.userId;
+        this.societyComplaint.c_id = this.complaint.c_id;
+        this.fireStore.collection('society').doc(GlobalService.societyId).collection('Complaints').doc(this.complaint.c_id).set({...this.societyComplaint});
         });
         this.complaint.isSolved = "Unsolved";
         console.log('name '+ this.name);
 
-        this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('Complaint').doc(this.generationDate).set({...this.complaint});
-        this.fireStore.collection('society').doc('sFxpx7WgYy9ojV4pzgvJ').collection('users').doc(GlobalService.userId).collection('Complaint').doc(this.generationDate).set({...this.complaint});
-     
+        this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('Complaint').doc(this.complaint.c_id).set({...this.complaint});
+        //this.fireStore.collection('society').doc(GlobalService.societyId).collection('users').doc(GlobalService.userId).collection('Complaint').doc(this.complaint.c_id).set({...this.complaint});
+        
         const increment = firebase.firestore.FieldValue.increment(1);
-        this.fireStore.collection('userDetails').doc(GlobalService.userId).update({"no_of_com": increment});
-        this.fireStore.collection('society').doc('sFxpx7WgYy9ojV4pzgvJ').collection('users').doc(GlobalService.userId).update({"no_of_com": increment});
+        this.fireStore.collection('userDetails').doc(GlobalService.userId).update({"no_of_comp": increment});
+        this.fireStore.collection('society').doc(GlobalService.societyId).collection('users').doc(GlobalService.userId).update({"no_of_com": increment});
         this.showToast('Your complaint was filed successfully.');
 
        }

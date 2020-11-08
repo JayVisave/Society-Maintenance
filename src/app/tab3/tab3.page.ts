@@ -17,6 +17,8 @@ export class Tab3Page {
   nocs: any;
   user = {} as User;
   noc = {} as Noc;
+  public NOCRef: any;
+  userDetails : any;
   constructor(
     private toastCtrl: ToastController, 
     private loadingCtrl : LoadingController,
@@ -38,6 +40,7 @@ export class Tab3Page {
           return{
             noc_type: e.payload.doc.data()["noc_type"],
             name: e.payload.doc.data()["name"],
+            isSolved: e.payload.doc.data()["isSolved"],
           }
         })
        })
@@ -49,7 +52,7 @@ export class Tab3Page {
     (await loader).dismiss();
   }
 
-  async request_noc(user: User){
+  async request_noc(noc: Noc){
     if(this.formValidation()){
       let loader = this.loadingCtrl.create({
          message: "Please wait..."
@@ -58,11 +61,32 @@ export class Tab3Page {
        try{
         this.generationDate = Date.now().toString();
         GlobalService.userId = await get("userId");
+        GlobalService.societyId = await get("societyID");
+        this.NOCRef = this.fireStore.createId();
         console.log("Global "+  GlobalService.userId);
-        this.fireStore.collection("userDetails").doc(GlobalService.userId).collection("NOC").doc(this.generationDate).set({...this.noc});
+        this.noc.n_id = this.NOCRef;
+        this.noc.u_id = GlobalService.userId;
+        this.fireStore.firestore.collection('userDetails').doc(GlobalService.userId).get().then(doc=>{
+          this.userDetails =  [doc.data()].map(e => {
+            return{
+              name: e['name'],
+              flat: e['flatNumber'],
+              wing: e['wing'],
+  
+            };
+          });
+        
+        this.noc.uname= this.userDetails[0]['name'];
+        this.noc.wing= this.userDetails[0]['wing'];
+        this.noc.flat= this.userDetails[0]['flat'];
+        this.noc.isSolved = "Unsolved";
+        this.fireStore.collection("userDetails").doc(GlobalService.userId).collection("NOC").doc(this.NOCRef).set({...this.noc});
+        this.fireStore.collection("society").doc(GlobalService.societyId).collection("NOC").doc(this.NOCRef).set({...this.noc});
         const increment = firebase.firestore.FieldValue.increment(1);
         this.fireStore.collection('userDetails').doc(GlobalService.userId).update({"no_of_noc": increment});
         this.showToast("Your request for NOC has been sent to the office.");
+        });
+        
       }
       catch(e)
       {

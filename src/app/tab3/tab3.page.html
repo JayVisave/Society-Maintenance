@@ -52,6 +52,34 @@
         </ion-item>
       </ion-col>
       </ion-row>
+      <div *ngIf="n.isSolved == 'Solved'; else elseBlock">
+        <ion-row  >
+          <ion-col>
+            <ion-item color="secondary">
+              <ion-label>Status</ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item color="secondary">
+              <ion-label>{{n.isSolved}}</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </div>
+      <ng-template #elseBlock>
+        <ion-row>
+          <ion-col>
+            <ion-item color="danger">
+              <ion-label>Status</ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item color="danger">
+              <ion-label>{{n.isSolved}}</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ng-template>
     </ion-grid>
   </ion-card></ion-card>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

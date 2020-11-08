@@ -5,4 +5,6 @@ export interface societyComplaint{
     name: string,
     flat: number,
     wing: string,
+    c_id: string,
+    u_id: string,
  }

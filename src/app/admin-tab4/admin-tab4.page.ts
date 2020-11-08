@@ -2,28 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
 import { ToastController, LoadingController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { get, GlobalService } from '../global.service';
-import { Complaint } from '../models/complaint.model';
-
+import { Noc } from '../models/noc.model';
 @Component({
-  selector: 'app-admin-tab2',
-  templateUrl: './admin-tab2.page.html',
-  styleUrls: ['./admin-tab2.page.scss'],
+  selector: 'app-admin-tab4',
+  templateUrl: './admin-tab4.page.html',
+  styleUrls: ['./admin-tab4.page.scss'],
 })
-export class AdminTab2Page implements OnInit {
-
-  compe_type: any;
-  issue: any;
-  generationDate: string;
-  allComplaints: any;
-  currentComplaint: any;
+export class AdminTab4Page implements OnInit {
   societyNames : any;
-  public societyName : string;
   public societyRef : string;
+  allNOC: any;
   societyID : string;
-
-  user = {} as User;
-  complaint = {} as Complaint;
   constructor(
     private toastCtrl: ToastController, 
     private loadingCtrl : LoadingController,
@@ -88,17 +77,19 @@ export class AdminTab2Page implements OnInit {
       //     }
       //   })
       //  })
-       this.fireStore.collection('society').doc(SocietyID).collection('Complaints').snapshotChanges().subscribe( data => {
-        this.allComplaints = data.map(e => {
+      this.societyRef = SocietyID;
+       this.fireStore.collection('society').doc(SocietyID).collection('NOC').snapshotChanges().subscribe( data => {
+        this.allNOC = data.map(e => {
         
          console.log('Type ' + e.payload.doc.data()['type']);
          return{
            u_id: e.payload.doc.data()['u_id'],
-           c_id: e.payload.doc.data()['c_id'],
+           n_id: e.payload.doc.data()['n_id'],
            name: e.payload.doc.data()['name'],
            wing: e.payload.doc.data()['wing'],
            flat: e.payload.doc.data()['flat'],
-           comp_type: e.payload.doc.data()['comp_type'],
+           uname: e.payload.doc.data()['uname'],
+           noc_type: e.payload.doc.data()['noc_type'],
          }
        })
       })
@@ -110,38 +101,26 @@ export class AdminTab2Page implements OnInit {
      }
     (await loader).dismiss();
   }
-
-  async resolveComplaint(complaintRef: any){
+  async resolveNOC(NOCRef: any){
    
-      let loader = this.loadingCtrl.create({
-         message: 'Please wait...'
-       });
-      (await loader).present();
-      try{
-        console.log("hello "+ complaintRef.c_id);
-        this.fireStore.collection('society').doc(this.societyRef).collection('Complaints').doc(complaintRef.c_id).delete();
-        this.fireStore.collection('userDetails').doc(complaintRef.u_id).collection('Complaint').doc(complaintRef.c_id).update({"isSolved": "Solved"});
-       }
-       catch (e){
-        console.log(e);
-        this.showToast(e);
-        
-      }
-      (await loader).dismiss();
-     
-  }
-  formValidation(){
-    if (!this.complaint.comp_type){
-      this.showToast('Select Category of Complaint.');
-      return false;
+    let loader = this.loadingCtrl.create({
+       message: 'Please wait...'
+     });
+    (await loader).present();
+    try{
+      console.log("hello "+ NOCRef.n_id);
+      console.log("hello 2 "+this.societyRef);
+      this.fireStore.collection('society').doc(this.societyRef).collection('NOC').doc(NOCRef.n_id).delete();
+      this.fireStore.collection('userDetails').doc(NOCRef.u_id).collection('NOC').doc(NOCRef.n_id).update({"isSolved": "Solved"});
+     }
+     catch (e){
+      console.log(e);
+      this.showToast(e);
+      
     }
-    if (!this.complaint.issue){
-      this.showToast('Please provide description for your complaint.');
-      return false;
-    }
-
-    return true;
-  }
+    (await loader).dismiss();
+   
+}
   showToast(message: string){
     this.toastCtrl.create({message: message, duration: 3000, }).then(toastData => toastData.present());
   }

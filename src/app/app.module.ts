@@ -13,18 +13,23 @@ import { environment } from 'src/environments/environment';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 
+import {HttpClientModule} from '@angular/common/http';
+import {FileOpener} from '@ionic-native/file-opener/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     AngularFireModule.initializeApp(environment.FIREBASE_CONFIG)
-    ,AngularFireAuthModule, AngularFirestoreModule
+    ,AngularFireAuthModule, AngularFirestoreModule,HttpClientModule
     
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    FileOpener
+
   ],
   bootstrap: [AppComponent]
 })

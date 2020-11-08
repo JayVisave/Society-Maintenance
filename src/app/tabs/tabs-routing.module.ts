@@ -31,6 +31,10 @@ const routes: Routes = [
         path: 'admin-tab3',
         loadChildren: () => import('../admin-tab3/admin-tab3.module').then(m => m.AdminTab3PageModule)
       },
+      {
+        path: 'admin-tab4',
+        loadChildren: () => import('../admin-tab4/admin-tab4.module').then(m => m.AdminTab4PageModule)
+      },
     ]
   },
   {
