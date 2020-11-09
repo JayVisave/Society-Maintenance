@@ -20,7 +20,7 @@
         <ion-label>{{bill.month}}-{{bill.year}}</ion-label>
         <!-- <ion-label>Bill Details</ion-label> -->
        <!-- <ion-label>Bill Details</ion-label>-->
-        <ion-button (click)="downloadPDF(bill)">
+        <ion-button (click)="downloadPDF(bill.month,bill.year)">
           <ion-icon name="cloud-download" slot="end"></ion-icon>
           Download PDF
         </ion-button>

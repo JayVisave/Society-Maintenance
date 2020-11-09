@@ -256,11 +256,14 @@ export class Tab1Page implements OnInit {
 
   }
 
-  downloadPDF()
+  downloadPDF(month: string, year: string)
   {
-    var generationDate = new Date();
-    this.todaysyear = generationDate.getFullYear().toString();
-    this.todaysmonth = generationDate.toLocaleString('default', { month: 'short' });
+    // var generationDate = new Date();
+    // this.todaysyear = generationDate.getFullYear().toString();
+    // this.todaysmonth = generationDate.toLocaleString('default', { month: 'short' });
+    this.todaysyear = year;
+    this.todaysmonth = month;
+    console.log("got data "+ month + "  year" + year);
     var billID = this.todaysmonth + ' ' + this.todaysyear;
     console.log("Bill id" + billID);
     this.fireStore.firestore.collection('userDetails').doc(GlobalService.userId).collection('bills').doc(billID).get().then(data => {
@@ -358,7 +361,7 @@ export class Tab1Page implements OnInit {
               ['Society Events', {text: data[0]['event']}],
               ['NOC Filing', {text: data[0]['noc'] }],
               ['Interest Bill', {text: data[0]['interest'] }],
-              ['Total Bill', {text: data[0]['billsum'] }],
+              [{text: 'Total Bill' , style: 'tableHeader'}, {text: data[0]['billsum'],style: 'tableHeader' }],
             ]
           }
         },
@@ -375,7 +378,7 @@ export class Tab1Page implements OnInit {
           margin: [0,15,0,0]
         },
         tableExample: {
-          margin: [0, 5, 0, 15]
+          margin: [0, 15, 0, 15]
         },
         tableHeader: {
           bold: true,
