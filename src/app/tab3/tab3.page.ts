@@ -101,10 +101,6 @@ export class Tab3Page {
       this.showToast("Select Category of NOC request.");
       return false;
     }
-    if(!this.noc.name){
-      this.showToast("Provide name of the new owner.");
-      return false;
-    }
 
     return true;
   }

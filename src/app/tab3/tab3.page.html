@@ -17,10 +17,6 @@
         <ion-select-option value="Loan">Home loan</ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-item >
-      <ion-label  position="stacked" >New owner's/tenant's name:</ion-label>
-      <ion-input type="text" [(ngModel)]="noc.name" required></ion-input>
-    </ion-item>
   </ion-card>
   <ion-card color="primary">
     <ion-card-header>
@@ -39,18 +35,6 @@
             <ion-label>{{n.noc_type}}</ion-label>
           </ion-item>
         </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-        <ion-item  >
-          <ion-label>New Owner/Tenant name:</ion-label>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item >
-          <ion-label>{{n.name}}</ion-label>
-        </ion-item>
-      </ion-col>
       </ion-row>
       <div *ngIf="n.isSolved == 'Solved'; else elseBlock">
         <ion-row  >

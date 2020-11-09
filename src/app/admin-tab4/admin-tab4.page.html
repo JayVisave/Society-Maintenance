@@ -27,16 +27,12 @@
       
           <ion-card *ngFor="let noc of allNOC">
             <ion-item>
-            <ion-label>Users</ion-label>
+            <ion-label>User</ion-label>
             <ion-label slot="end">Wing-Flat</ion-label>
           </ion-item>
           <ion-item>
-          <ion-label>{{noc.name}}</ion-label>
+          <ion-label>{{noc.uname}}</ion-label>
             <ion-label slot="end">{{noc.wing}}-{{noc.flat}}</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label color="dark">Old Name</ion-label>
-            <ion-label slot="end">{{noc.unmae}}</ion-label>
           </ion-item>
           <ion-item>
             <ion-label color="dark">NOC Type</ion-label>

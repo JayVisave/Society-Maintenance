@@ -85,7 +85,6 @@ export class AdminTab4Page implements OnInit {
          return{
            u_id: e.payload.doc.data()['u_id'],
            n_id: e.payload.doc.data()['n_id'],
-           name: e.payload.doc.data()['name'],
            wing: e.payload.doc.data()['wing'],
            flat: e.payload.doc.data()['flat'],
            uname: e.payload.doc.data()['uname'],

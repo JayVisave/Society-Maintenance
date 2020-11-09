@@ -1,6 +1,5 @@
 export interface Noc{
     noc_type: string;
-    name: string;
     flat: number;
     wing: string;
     isSolved: string;
