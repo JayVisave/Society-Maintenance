@@ -34,7 +34,7 @@ export class Tab1Page implements OnInit {
   todaysyear: string;
   todaysmonthNumber: number;
   dataStore: any;
-  logoData: string | ArrayBuffer;
+  public logoData: string | ArrayBuffer;
   pdfObj: any;
   // userDetailsConverter= {
   //   toFirestore: function(userD) {
@@ -180,7 +180,7 @@ export class Tab1Page implements OnInit {
             interest : e.payload.doc.data()['interest'],
             sname : e.payload.doc.data()['sname'],
             event : e.payload.doc.data()['event'],
-            billsum :  e.payload.doc.data()['billsum'],
+            billsum : e.payload.doc.data()['type']+ e.payload.doc.data()['category']+ e.payload.doc.data()['water']+ e.payload.doc.data()['struct']+e.payload.doc.data()['parking'] +e.payload.doc.data()['complaint'] + e.payload.doc.data()['noc'] + e.payload.doc.data()['interest'] ,
             month:  e.payload.doc.data()['month'],
             year:  e.payload.doc.data()['year'],
           };
@@ -280,14 +280,14 @@ export class Tab1Page implements OnInit {
         interest : e['interest'],
         sname : e['sname'],
         event : e['event'],
-        billsum :  e['billsum'],
+        billsum :  e['type']+e['category']+e['water']+e['struct']+e['parking']+e['complaint']+e['noc']+e['interest'],
         month:  e['month'],
         year:  e['year'],
       };
       
       });
       console.log("In fetch "+ this.dataStore['sname']);
-     // this.loadLogo();
+      this.loadLogo();
       this.createPDF(this.dataStore);
       this.downloadPDFFile();
     });
@@ -295,7 +295,7 @@ export class Tab1Page implements OnInit {
   }
 
   loadLogo(){
-    this.http.get('./resources/icon.png', {responseType: 'blob'})
+    this.http.get('https://image.shutterstock.com/image-vector/hi-hello-banner-speech-bubble-260nw-1505210795.jpg', {responseType: 'blob'})
     .subscribe(res => {
       const reader = new FileReader();
       reader.onloadend = () =>{
@@ -307,12 +307,13 @@ export class Tab1Page implements OnInit {
   createPDF(data: any){
    
     console.log("In crreate "+ data[0]['sname']);
+    //let logo = {image: this.logoData};
     const docDefinition = {
       watermark: {text: 'Society Maintenance', color: 'green', opacity :0.1, bold:true},
       content:[
         {
           columns: [
-            //this.logoData,
+            //logo,
             {
               text: new Date().toTimeString(),
               alignment: 'right'

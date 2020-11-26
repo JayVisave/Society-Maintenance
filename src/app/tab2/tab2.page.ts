@@ -44,6 +44,8 @@ export class Tab2Page implements OnInit{
     try{
       GlobalService.userId = await get('userId');
       GlobalService.societyId = await get('societyID');
+      console.log('Global '+  GlobalService.userId);
+      console.log('Global '+  GlobalService.societyId);
       this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('Complaint').snapshotChanges().subscribe( data=>{
          this.complaints = data.map(e=>{
           console.log('Type '+e.payload.doc.data()['type']);
@@ -72,7 +74,8 @@ export class Tab2Page implements OnInit{
         this.generationDate = Date.now().toString();
         GlobalService.userId = await get('userId');
         GlobalService.societyId = await get('societyID');
-        console.log('Global '+  GlobalService.userId);
+        console.log('Global 1'+  GlobalService.userId);
+        console.log('Global 1'+  GlobalService.societyId);
         this.fireStore.firestore.collection('userDetails').doc(GlobalService.userId).get()
       .then(doc => {
         this.userDetails =  [doc.data()].map(e => {
@@ -97,11 +100,13 @@ export class Tab2Page implements OnInit{
         this.societyComplaint.u_id = GlobalService.userId;
         this.societyComplaint.c_id = this.complaint.c_id;
         this.fireStore.collection('society').doc(GlobalService.societyId).collection('Complaints').doc(this.complaint.c_id).set({...this.societyComplaint});
-        });
         this.complaint.isSolved = "Unsolved";
-        console.log('name '+ this.name);
-
         this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('Complaint').doc(this.complaint.c_id).set({...this.complaint});
+      });
+        
+        //console.log('name '+ this.name);
+
+       
         //this.fireStore.collection('society').doc(GlobalService.societyId).collection('users').doc(GlobalService.userId).collection('Complaint').doc(this.complaint.c_id).set({...this.complaint});
         
         const increment = firebase.firestore.FieldValue.increment(1);
