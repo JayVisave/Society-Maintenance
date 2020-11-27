@@ -8,5 +8,6 @@ export interface UserDetails{
     wing: string,
     flatNumber: number,
     no_of_comp: number,
-    no_of_noc: number
+    no_of_noc: number,
+    u_id: string,
 }

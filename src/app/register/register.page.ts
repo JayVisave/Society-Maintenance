@@ -133,6 +133,7 @@ export class RegisterPage implements OnInit {
             this.userDetails.no_of_comp = 0;
             this.userDetails.no_of_noc =0;
             this.userDetails.societyName = this.tempSocietyName;
+            this.userDetails.u_id = data.user.uid;
             this.fireStore.collection('userDetails').doc(data.user.uid).set({...userDetails});
             // this.societyUser.name= userDetails.name;
             // this.societyUser.u_id = data.user.uid;

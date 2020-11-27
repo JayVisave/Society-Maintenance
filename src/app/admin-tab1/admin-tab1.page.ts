@@ -61,6 +61,8 @@ export class AdminTab1Page implements OnInit {
       });
       (await loader).present();
       try{
+        console.log("UID: ", user);
+        console.log("tid: ", tempID);
         this.fireStore.collection('userDetails').doc(user.id).delete();
         this.fireStore.collection("society").doc(tempID).collection('users').doc(user.id).delete().then(function() {
           console.log("Document successfully deleted!");
