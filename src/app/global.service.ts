@@ -27,7 +27,7 @@ export async function remove(key: string): Promise<void> {
 export class GlobalService {
   public static userId;
   public static societyId;
-
+  public static userCode;
   
 //   constructor(name, state, country) {
 //     this.name = name;

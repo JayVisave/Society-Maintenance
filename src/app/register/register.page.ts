@@ -126,6 +126,10 @@ export class RegisterPage implements OnInit {
             if (user.email.substring(0, 5) === 'admin'){
               set('userId', 'admin' + data.user.uid);
             }
+            else if(user.email.substring(0, 7) === 'society'){
+              set("userCode",user.email.substr(7, 5));
+              set('userId', 'society' + data.user.uid);
+            }
             else{
               set('userId', data.user.uid);
               

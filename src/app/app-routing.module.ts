@@ -42,6 +42,14 @@ const routes: Routes = [
   {
     path: 'admin-tab4',
     loadChildren: () => import('./admin-tab4/admin-tab4.module').then( m => m.AdminTab4PageModule)
+  },
+  {
+    path: 'society-admin-tab1',
+    loadChildren: () => import('./society-admin-tab1/society-admin-tab1.module').then( m => m.SocietyAdminTab1PageModule)
+  },
+  {
+    path: 'society-admin-tab2',
+    loadChildren: () => import('./society-admin-tab2/society-admin-tab2.module').then( m => m.SocietyAdminTab2PageModule)
   }
 
 

@@ -3,6 +3,7 @@ import { ToastController, LoadingController, NavController } from '@ionic/angula
 import { AngularFirestore } from '@angular/fire/firestore';
 import { set } from '../global.service';
 import { Society } from '../models/Society.model';
+import { SocietyCode } from '../models/SocietyCode.model';
 @Component({
   selector: 'app-admin-tab3',
   templateUrl: './admin-tab3.page.html',
@@ -10,6 +11,7 @@ import { Society } from '../models/Society.model';
 })
 export class AdminTab3Page implements OnInit {
   society = {} as Society;
+  societyCode = {} as SocietyCode;
   id: string;
   constructor(
     private toastCtrl: ToastController,
@@ -19,6 +21,7 @@ export class AdminTab3Page implements OnInit {
 
   ngOnInit() {
   }
+  
   async register(society: Society){
     if (this.formValidation()){
       const loader = this.loadingCtrl.create({
@@ -28,6 +31,9 @@ export class AdminTab3Page implements OnInit {
       try{
         this.id =this.fireStore.createId();
         this.society.id = this.id;
+        this.societyCode.id = this.id;
+        var genCode = this.makeid();
+        this.fireStore.collection('societyCodes').doc(genCode).set({...this.societyCode});
         this.fireStore.collection('society').doc(this.id).set({...this.society});
         this.showToast("Society : "+ this.society.name +" created successfully.");
         
@@ -42,6 +48,15 @@ export class AdminTab3Page implements OnInit {
 
     }
  }
+ makeid() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < 5; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
  formValidation(){
    if (!this.society.name){
      this.showToast('Enter Valid Society Name.');

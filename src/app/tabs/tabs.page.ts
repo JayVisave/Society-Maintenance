@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabsPage implements OnInit{
   typeUser: boolean;
+  typeUser2: boolean;
   constructor() {
   }
   async ngOnInit() {
@@ -17,6 +18,12 @@ export class TabsPage implements OnInit{
     }
     else{
       this.typeUser = false;
+    }
+    if(GlobalService.userId.substring(0, 7 ) === 'society'){
+      this.typeUser2 = true;
+    }
+    else{
+      this.typeUser2 = false;
     }
   }
 

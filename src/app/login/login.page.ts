@@ -37,6 +37,11 @@ user = {} as User;
             set('userId', 'admin' + data.user.uid);
             this.navCtrl.navigateRoot('/tabs/admin-tab1');
           }
+          else if(user.email.substring(0, 7) === 'society'){
+            set("userCode",user.email.substr(7, 5));
+            set('userId', 'society' + data.user.uid);
+            this.navCtrl.navigateRoot('/tabs/society-admin-tab1');
+          }
           else{
             set('userId', data.user.uid);
             this.navCtrl.navigateRoot('/tabs');
