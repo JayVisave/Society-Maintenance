@@ -1,0 +1,117 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>VISITORS</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card color="secondary">
+    <ion-card-header>
+      <ion-card-title class="ion-text-center" >Visitors</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-card>
+
+        <ion-card-header>
+          <!-- <ion-thumbnail >
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </ion-thumbnail> -->
+          <ion-card-subtitle>Name</ion-card-subtitle>
+          <ion-card-title>Reason of Visit</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Description
+     
+        </ion-card-content>
+        <ion-item  >
+          <ion-button class="ion-no-margin ion-margin-end ion-margin-bottom" expand="block" size="default" color="danger">Reject</ion-button>
+          <ion-button class="ion-no-margin ion-margin-bottom  " expand="block" size="default" slot="end" color="success" >Accept</ion-button>
+         
+        </ion-item>
+      </ion-card>
+      <ion-card>
+
+        <ion-card-header>
+          <!-- <ion-thumbnail >
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </ion-thumbnail> -->
+          <ion-card-subtitle>Name</ion-card-subtitle>
+          <ion-card-title>Reason of Visit</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Description
+     
+        </ion-card-content>
+        <ion-item  >
+          <ion-button class="ion-no-margin ion-margin-end ion-margin-bottom" expand="block" size="default" color="danger">Reject</ion-button>
+          <ion-button class="ion-no-margin ion-margin-bottom  " expand="block" size="default" slot="end" color="success" >Accept</ion-button>
+         
+        </ion-item>
+      </ion-card>
+    </ion-card-content>
+  </ion-card>
+  <ion-card color="success">
+    <ion-card-header>
+      <ion-card-title class="ion-text-center" >Assessed Visitors</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-card>
+
+        <ion-card-header>
+          <!-- <ion-thumbnail >
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </ion-thumbnail> -->
+          <ion-card-subtitle>Name</ion-card-subtitle>
+          <ion-card-title>Reason of Visit</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Description
+     
+        </ion-card-content>
+        <!-- <div *ngIf="n.isSolved == 'Solved'; else elseBlock"> -->
+          <ion-row  >
+            <ion-col>
+              <ion-item color="secondary">
+                <ion-label class="ion-text-center">Status</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item color="secondary">
+                <ion-label class="ion-text-center">Accepted</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        <!-- </div> -->
+      </ion-card>
+      <ion-card>
+
+        <ion-card-header>
+          <!-- <ion-thumbnail >
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </ion-thumbnail> -->
+          <ion-card-subtitle>Name</ion-card-subtitle>
+          <ion-card-title>Reason of Visit</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Description
+     
+        </ion-card-content>
+        <!-- <div *ngIf="n.isSolved == 'Solved'; else elseBlock"> -->
+          <ion-row  >
+            <ion-col>
+              <ion-item color="danger">
+                <ion-label class="ion-text-center">Status</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item color="danger">
+                <ion-label class="ion-text-center">Rejected</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        <!-- </div> -->
+      </ion-card>
+    </ion-card-content>
+  </ion-card>
+  
+</ion-content>

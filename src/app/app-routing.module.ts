@@ -50,6 +50,10 @@ const routes: Routes = [
   {
     path: 'society-admin-tab2',
     loadChildren: () => import('./society-admin-tab2/society-admin-tab2.module').then( m => m.SocietyAdminTab2PageModule)
+  },
+  {
+    path: 'tab4',
+    loadChildren: () => import('./tab4/tab4.module').then( m => m.Tab4PageModule)
   }
 
 
