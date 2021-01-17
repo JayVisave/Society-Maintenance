@@ -24,6 +24,10 @@ const routes: Routes = [
         loadChildren: () => import('../tab4/tab4.module').then(m => m.Tab4PageModule)
       },
       {
+        path: 'all-notices',
+        loadChildren: () => import('../all-notices/all-notices.module').then(m => m.AllNoticesPageModule)
+      },
+      {
         path: 'admin-tab1',
         loadChildren: () => import('../admin-tab1/admin-tab1.module').then(m => m.AdminTab1PageModule)
       },
@@ -38,6 +42,10 @@ const routes: Routes = [
       {
         path: 'admin-tab4',
         loadChildren: () => import('../admin-tab4/admin-tab4.module').then(m => m.AdminTab4PageModule)
+      },
+      {
+        path: 'admin-notices',
+        loadChildren: () => import('../admin-notices/admin-notices.module').then(m => m.AdminNoticesPageModule)
       },
       {
         path: 'society-admin-tab1',

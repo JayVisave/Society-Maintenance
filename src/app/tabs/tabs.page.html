@@ -27,11 +27,17 @@
     <ion-tab-button *ngIf="!typeUser && !typeUser2" tab="tab4">
       <ion-icon name="man-outline"></ion-icon>
     </ion-tab-button>
+    <ion-tab-button *ngIf="!typeUser && !typeUser2" tab="all-notices">
+      <ion-icon name="clipboard-outline"></ion-icon>
+    </ion-tab-button>
     <ion-tab-button *ngIf="!typeUser && typeUser2" tab="society-admin-tab1">
       <ion-icon name="man-outline"></ion-icon>
     </ion-tab-button>
     <ion-tab-button *ngIf="!typeUser && typeUser2" tab="society-admin-tab2">
       <ion-icon name="clipboard-outline"></ion-icon>
+    </ion-tab-button>
+    <ion-tab-button *ngIf="!typeUser && typeUser2" tab="admin-notices">
+      <ion-icon name="documents-outline"></ion-icon>
     </ion-tab-button>
   </ion-tab-bar>
 
