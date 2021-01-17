@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController, LoadingController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Notice } from '../models/notice.model';
+import { get, GlobalService } from '../global.service';
 
 @Component({
   selector: 'app-admin-notices',
@@ -8,56 +10,48 @@ import { AngularFirestore } from '@angular/fire/firestore';
   styleUrls: ['./admin-notices.page.scss'],
 })
 export class AdminNoticesPage implements OnInit {
-  compe_type: any;
-  issue: any;
-  generationDate: string;
-  complaints: any;
-  name: string;
-  flat: any;
-  wing: string;
 
-  user = {} as User;
-  complaint = {} as Complaint;
-  societyComplaint = {} as societyComplaint;
-  userDetails : any;
+  generationDate: string;
+  notices : Notice;
+  
   constructor(
     private toastCtrl: ToastController, 
     private loadingCtrl : LoadingController,
     private fireStore : AngularFirestore,
   ) {}
   ngOnInit() {
-    this.getComplaints(event);
+    // this.getComplaints(event);
   }
 
-  async getComplaints(event){
-    let loader = this.loadingCtrl.create({
-      message: 'Please wait...'
-    });
-    (await loader).present();
-    try{
-      GlobalService.userId = await get('userId');
-      GlobalService.societyId = await get('societyID');
-      console.log('Global '+  GlobalService.userId);
-      console.log('Global '+  GlobalService.societyId);
-      this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('Complaint').snapshotChanges().subscribe( data=>{
-         this.complaints = data.map(e=>{
-          console.log('Type '+e.payload.doc.data()['type']);
-          return{
-            comp_type: e.payload.doc.data()['comp_type'],
-            issue: e.payload.doc.data()['issue'],
-            isSolved: e.payload.doc.data()['isSolved'],
-          }
-        })
-       })
-     }
-     catch(e)
-     {
-       this.showToast(e);
-     }
-    (await loader).dismiss();
-  }
+  // async getComplaints(event){
+  //   let loader = this.loadingCtrl.create({
+  //     message: 'Please wait...'
+  //   });
+  //   (await loader).present();
+  //   try{
+  //     GlobalService.userId = await get('userId');
+  //     GlobalService.societyId = await get('societyID');
+  //     console.log('Global '+  GlobalService.userId);
+  //     console.log('Global '+  GlobalService.societyId);
+  //     this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('Complaint').snapshotChanges().subscribe( data=>{
+  //        this.complaints = data.map(e=>{
+  //         console.log('Type '+e.payload.doc.data()['type']);
+  //         return{
+  //           comp_type: e.payload.doc.data()['comp_type'],
+  //           issue: e.payload.doc.data()['issue'],
+  //           isSolved: e.payload.doc.data()['isSolved'],
+  //         }
+  //       })
+  //      })
+  //    }
+  //    catch(e)
+  //    {
+  //      this.showToast(e);
+  //    }
+  //   (await loader).dismiss();
+  // }
 
-  async file_Complaint(user: User){
+  async file_Notice(notice: Notice){
     if(this.formValidation()){
       let loader = this.loadingCtrl.create({
          message: 'Please wait...'
@@ -69,45 +63,27 @@ export class AdminNoticesPage implements OnInit {
         GlobalService.societyId = await get('societyID');
         console.log('Global 1'+  GlobalService.userId);
         console.log('Global 1'+  GlobalService.societyId);
-        this.fireStore.firestore.collection('userDetails').doc(GlobalService.userId).get()
-      .then(doc => {
-        this.userDetails =  [doc.data()].map(e => {
-          return{
-            name: e['name'],
-            flat: e['flatNumber'],
-            wing: e['wing'],
 
-          };
-       
-        });
-
-        this.complaint.u_id = GlobalService.userId;
-        this.complaint.c_id = this.fireStore.createId();
-        this.complaint.isSolved = "Unsolved";
-        this.societyComplaint.name = this.userDetails[0]['name'];
-        this.societyComplaint.flat = this.userDetails[0]['flat'];
-        this.societyComplaint.wing = this.userDetails[0]['wing'];
-        this.societyComplaint.comp_type = this.complaint.comp_type;
-        this.societyComplaint.issue = this.complaint.issue;
-        this.societyComplaint.isSolved = this.complaint.isSolved;
-        this.societyComplaint.u_id = GlobalService.userId;
-        this.societyComplaint.c_id = this.complaint.c_id;
-        this.fireStore.collection('society').doc(GlobalService.societyId).collection('Complaints').doc(this.complaint.c_id).set({...this.societyComplaint});
-        this.complaint.isSolved = "Unsolved";
-        this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('Complaint').doc(this.complaint.c_id).set({...this.complaint});
-      });
+        this.notices.u_id = GlobalService.userId;
+        this.notices.n_id= this.fireStore.createId();
+        this.notices.date = notice.date;
+        this.notices.desc = notice.desc;
+        this.notices.title = notice.title;
+        this.notices.type = notice.type;
+        this.fireStore.collection('society').doc(GlobalService.societyId).collection('Notices').doc(this.notices.n_id).set({...this.notices});
+        // this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('Complaint').doc(this.complaint.c_id).set({...this.complaint});
+      }
         
         //console.log('name '+ this.name);
 
-       
-        //this.fireStore.collection('society').doc(GlobalService.societyId).collection('users').doc(GlobalService.userId).collection('Complaint').doc(this.complaint.c_id).set({...this.complaint});
-        
-        const increment = firebase.firestore.FieldValue.increment(1);
-        this.fireStore.collection('userDetails').doc(GlobalService.userId).update({"no_of_comp": increment});
-        this.fireStore.collection('society').doc(GlobalService.societyId).collection('users').doc(GlobalService.userId).update({"no_of_com": increment});
-        this.showToast('Your complaint was filed successfully.');
+    
+        //this.fireStore.collection('society').doc(GlobalService.societyId).collection('users').doc(GlobalService.userId).collection('Complaint').doc(this.complaint.c_id).set({...this.complaint});    
+        // const increment = firebase.firestore.FieldValue.increment(1);
+        // this.fireStore.collection('userDetails').doc(GlobalService.userId).update({"no_of_comp": increment});
+        // this.fireStore.collection('society').doc(GlobalService.societyId).collection('users').doc(GlobalService.userId).update({"no_of_com": increment});
+        // this.showToast('Your complaint was filed successfully.');
 
-       }
+       
        catch(e){
         console.log(e);
         this.showToast(e);
@@ -117,15 +93,22 @@ export class AdminNoticesPage implements OnInit {
       }
   }
   formValidation(){
-    if(!this.complaint.comp_type){
-      this.showToast('Select Category of Complaint.');
+    if(!this.notices.title){
+      this.showToast('Please provide title for your notice.');
       return false;
     }
-    if(!this.complaint.issue){
-      this.showToast('Please provide description for your complaint.');
+    if(!this.notices.date){
+      this.showToast('Please provide date for your notice.');
       return false;
     }
-
+    if(!this.notices.desc){
+      this.showToast('Please provide description for notice.');
+      return false;
+    }
+    if(!this.notices.type){
+      this.showToast('Select type of notice.');
+      return false;
+    }
     return true;
   }
   showToast(message: string){

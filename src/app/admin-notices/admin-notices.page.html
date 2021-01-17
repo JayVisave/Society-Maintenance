@@ -1,11 +1,14 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Notices</ion-title>
+    <ion-title>NOTICES</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card color="primary">
+  <ion-card color="secondary">
+    <ion-card-header> 
+      <ion-card-title>New Notice</ion-card-title>
+    </ion-card-header>
     <ion-item>
       <ion-label>Type</ion-label>
       <ion-select placeholder="Select One" okText="Confirm" cancelText="Cancel" [(ngModel)]="complaint.comp_type"
@@ -16,74 +19,20 @@
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked">Write your complaint</ion-label>
-      <ion-input type="text" [(ngModel)]="complaint.issue" required></ion-input>
+      <ion-label position="stacked">Title</ion-label>
+      <ion-input type="text" [(ngModel)]="notice.title" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Description</ion-label>
+      <ion-input type="text" [(ngModel)]="notice.desc" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Title</ion-label>
+      <ion-input type="date" [(ngModel)]="notice.date" required></ion-input>
     </ion-item>
   </ion-card>
-  <ion-card color="primary">
-    <ion-card-header>
-      <ion-card-title class="ion-text-center">Filed Complaints</ion-card-title>
-    </ion-card-header>
-    <ion-card class="white-card" *ngFor="let c of complaints">
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-label>Type</ion-label>
-            </ion-item>
-          </ion-col>
-          <ion-col>
-            <ion-item>
-              <ion-label>{{c.comp_type}}</ion-label>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-label>Description</ion-label>
-            </ion-item>
-          </ion-col>
-          <ion-col>
-            <ion-item>
-              <ion-label>{{c.issue}}</ion-label>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <div *ngIf="c.isSolved == 'Solved'; else elseBlock">
-          <ion-row  >
-            <ion-col>
-              <ion-item color="secondary">
-                <ion-label>Status</ion-label>
-              </ion-item>
-            </ion-col>
-            <ion-col>
-              <ion-item color="secondary">
-                <ion-label>{{c.isSolved}}</ion-label>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-        </div>
-        <ng-template #elseBlock>
-          <ion-row>
-            <ion-col>
-              <ion-item color="danger">
-                <ion-label>Status</ion-label>
-              </ion-item>
-            </ion-col>
-            <ion-col>
-              <ion-item color="danger">
-                <ion-label>{{c.isSolved}}</ion-label>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-        </ng-template>
-
-      </ion-grid>
-    </ion-card>
-  </ion-card>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="file_Complaint(user)">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+    <ion-fab-button color="secondary" (click)="file_Notice(notice)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
