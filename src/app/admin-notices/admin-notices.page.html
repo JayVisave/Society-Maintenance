@@ -4,14 +4,14 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content  [fullscreen]="true">
   <ion-card color="secondary">
     <ion-card-header> 
       <ion-card-title>New Notice</ion-card-title>
     </ion-card-header>
     <ion-item>
       <ion-label>Type</ion-label>
-      <ion-select placeholder="Select One" okText="Confirm" cancelText="Cancel" [(ngModel)]="complaint.comp_type"
+      <ion-select placeholder="Select One" okText="Confirm" cancelText="Cancel" [(ngModel)]="notice.type"
         required>
         <ion-select-option value="warning">Important</ion-select-option>
         <ion-select-option value="wine">Party</ion-select-option>
@@ -27,7 +27,7 @@
       <ion-input type="text" [(ngModel)]="notice.desc" required></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked">Title</ion-label>
+      <ion-label position="stacked">Date</ion-label>
       <ion-input type="date" [(ngModel)]="notice.date" required></ion-input>
     </ion-item>
   </ion-card>

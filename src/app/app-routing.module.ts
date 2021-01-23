@@ -27,7 +27,8 @@ const routes: Routes = [
   {
     path: 'welcome',
     loadChildren: () => import('./welcome/welcome.module').then( m => m.WelcomePageModule)
-  },  {
+  },
+  {
     path: 'admin-tab1',
     loadChildren: () => import('./admin-tab1/admin-tab1.module').then( m => m.AdminTab1PageModule)
   },

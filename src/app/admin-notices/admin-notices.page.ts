@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController, LoadingController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Notice } from '../models/notice.model';
-import { get, GlobalService } from '../global.service';
+import { get, GlobalService, set } from '../global.service';
 
 @Component({
   selector: 'app-admin-notices',
@@ -12,8 +12,7 @@ import { get, GlobalService } from '../global.service';
 export class AdminNoticesPage implements OnInit {
 
   generationDate: string;
-  notices : Notice;
-  
+  notice = {} as Notice;
   constructor(
     private toastCtrl: ToastController, 
     private loadingCtrl : LoadingController,
@@ -58,19 +57,30 @@ export class AdminNoticesPage implements OnInit {
        });
        (await loader).present();
        try{
+
+        this.fireStore.firestore.collection('userDetails').doc(GlobalService.userId).get()
+      .then(doc => {
+         console.log('Document data:', doc.data()['societyID']);
+        set('societyID',doc.data()['societyID']);
+        // const comment = doc.data();   // get data in result variable
+        // this.items = JSON.stringify(comment); // then convert data to json string
+        // console.log("Items "+this.items);
+        // this.allData = JSON.parse(this.items); // parse json data and pass json string
+        // console.log("all data "+this.allData["isCommercial"]); // got result of particular string
+        //map(data=>{});
+        });
         this.generationDate = Date.now().toString();
         GlobalService.userId = await get('userId');
         GlobalService.societyId = await get('societyID');
         console.log('Global 1'+  GlobalService.userId);
-        console.log('Global 1'+  GlobalService.societyId);
-
-        this.notices.u_id = GlobalService.userId;
-        this.notices.n_id= this.fireStore.createId();
-        this.notices.date = notice.date;
-        this.notices.desc = notice.desc;
-        this.notices.title = notice.title;
-        this.notices.type = notice.type;
-        this.fireStore.collection('society').doc(GlobalService.societyId).collection('Notices').doc(this.notices.n_id).set({...this.notices});
+        console.log('Global 2'+  GlobalService.societyId);
+        this.notice.u_id = GlobalService.userId;
+        this.notice.n_id= this.fireStore.createId();
+        this.notice.date = notice.date;
+        this.notice.desc = notice.desc;
+        this.notice.title = notice.title;
+        this.notice.type = notice.type;
+        this.fireStore.collection('society').doc(GlobalService.societyId).collection('Notices').doc(this.notice.n_id).set({...this.notice});
         // this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('Complaint').doc(this.complaint.c_id).set({...this.complaint});
       }
         
@@ -93,19 +103,19 @@ export class AdminNoticesPage implements OnInit {
       }
   }
   formValidation(){
-    if(!this.notices.title){
+    if(!this.notice.title){
       this.showToast('Please provide title for your notice.');
       return false;
     }
-    if(!this.notices.date){
+    if(!this.notice.date){
       this.showToast('Please provide date for your notice.');
       return false;
     }
-    if(!this.notices.desc){
+    if(!this.notice.desc){
       this.showToast('Please provide description for notice.');
       return false;
     }
-    if(!this.notices.type){
+    if(!this.notice.type){
       this.showToast('Select type of notice.');
       return false;
     }

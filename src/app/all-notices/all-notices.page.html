@@ -4,47 +4,32 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  
-  <ion-card >
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="getAllNotices($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-card *ngFor="let notice of notices">
     <ion-card-header>
       <ion-item >
-      <ion-icon name="wine" slot="start"></ion-icon>
-      <ion-card-title >New Year</ion-card-title>
+      <ion-icon name="{{notice.type}}" slot="start"></ion-icon>
+      <ion-card-title >{{notice.title}}</ion-card-title>
     </ion-item>
       
     </ion-card-header>
     <ion-item>
 
-      <ion-label>Date: 18 Jan 21</ion-label>
+      <!-- <ion-label>Date: {{notice.date}}</ion-label> -->
+      <ion-label>{{notice.date}}</ion-label>
       <ion-button fill="outline" color="secondary">View</ion-button>
       <ion-button fill="outline" color="danger">Remove</ion-button>
     </ion-item>
   
     <ion-card-content>
-      Party in society ground at 9 P.M.
+      {{notice.desc}}
     </ion-card-content>
   </ion-card>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-item>
-      <ion-icon name="warning" slot="start"></ion-icon>
-      <ion-card-title>Parking Fee</ion-card-title>
-    </ion-item>
-      
-    </ion-card-header>
-    <ion-item>
-
-      <ion-label>Date: 17 Jan 21</ion-label>
-      <ion-button fill="outline" color="secondary">View</ion-button>
-      <ion-button fill="outline" color="danger">Remove</ion-button>
-    </ion-item>
-  
-    <ion-card-content>
-      Increase in Parking Fee by Rs.100 per vehicle.
-    </ion-card-content>
-  </ion-card>
+ 
   
   
 </ion-content>
