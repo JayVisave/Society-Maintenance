@@ -4,6 +4,33 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
 
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="getAllNotices($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-card *ngFor="let notice of notices">
+    <ion-card-header>
+      <ion-item >
+      <ion-icon name="{{notice.type}}" slot="start"></ion-icon>
+      <ion-card-title >{{notice.title}}</ion-card-title>
+    </ion-item>
+      
+    </ion-card-header>
+    <ion-item>
+
+      <!-- <ion-label>Date: {{notice.date}}</ion-label> -->
+      <ion-label>{{notice.date}}</ion-label>
+      <!-- <ion-button fill="outline" color="secondary">View</ion-button> -->
+      <ion-button fill="outline" color="danger" (click)="deleteNotice(notice)">Remove</ion-button>
+    </ion-item>
+  
+    <ion-card-content>
+      {{notice.desc}}
+    </ion-card-content>
+  </ion-card>
+
+ 
+  
+  
 </ion-content>

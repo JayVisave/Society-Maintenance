@@ -10,6 +10,7 @@ import { get, GlobalService, set } from '../global.service';
 
 export class AllNoticesPage implements OnInit {
   notices: any;
+  tempDate: string;
   constructor(    private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private fireStore: AngularFirestore,) { 
@@ -50,10 +51,16 @@ export class AllNoticesPage implements OnInit {
         this.fireStore.collection('society').doc(GlobalService.societyId).collection('Notices', ref => ref.orderBy('date', 'desc')).snapshotChanges().subscribe( data => {
           this.notices = data.map(e => {
             console.log('Type ' + e.payload.doc.data()['type']);
+            var generationDate = new Date(e.payload.doc.data()['date']);
+            this.tempDate = "";
+            this.tempDate += generationDate.getDay()+" ";
+            this.tempDate += generationDate.toLocaleString('default', { month: 'short' })+" ";
+ 
+            this.tempDate += generationDate.getFullYear().toString()+" ";
             return{
             title: e.payload.doc.data()['title'],
             type: e.payload.doc.data()['type'],
-            date: e.payload.doc.data()['date'],
+            date: this.tempDate,
             n_id: e.payload.doc.data()['n_id'],
             desc: e.payload.doc.data()['desc'],
           };
