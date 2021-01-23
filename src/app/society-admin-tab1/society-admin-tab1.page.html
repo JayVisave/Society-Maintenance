@@ -5,5 +5,45 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+      <ion-item>
+        <ion-label position="stacked" >Visitor name</ion-label>
+        <ion-input type="text" [(ngModel)]="visitor.name" required></ion-input>
+      </ion-item>
+      <ion-item >
+        <ion-label  position="stacked" >Phone</ion-label>
+        <ion-input  type="text" [(ngModel)]="visitor.phone" required></ion-input>
+      </ion-item>
+      <ion-item >
+        <ion-label  position="stacked" >Society</ion-label>
+        <ion-select placeholder="Select One" okText="Confirm" cancelText="Cancel" [(ngModel)]="visitor.society" (ngModelChange)="getUserDetails(visitor.society)" required>
+          <ion-select-option value="{{society.id}}" *ngFor="let society of societyNames">{{society.name}}</ion-select-option>
+        </ion-select>
+        <!-- <ion-input type="text" [(ngModel)]="visitor.society" required></ion-input> -->
+      </ion-item>
+      <ion-item >
+        <ion-label  position="stacked" >User</ion-label>
+        <ion-select placeholder="Select One" okText="Confirm" cancelText="Cancel" [(ngModel)]="visitor.user" required>
+          <ion-select-option value="{{user.id}}" *ngFor="let user of users">{{user.name}}</ion-select-option>
+        </ion-select>
+        <!-- <ion-input type="text" [(ngModel)]="visitor.user" required></ion-input> -->
+      </ion-item>
+      <ion-item >
+        <ion-label  position="stacked" >Reason of visit</ion-label>
+        <ion-input type="text" [(ngModel)]="visitor.reason" required></ion-input>
+      </ion-item>
+      <ion-item >
+        <ion-label  position="stacked" >Upload photo</ion-label>
+        <ion-input type="file" [(ngModel)]="visitor.photo" required></ion-input>
+      </ion-item>
+    </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button class="ion-padding" color="primary" expand="full" (click)="visitRequest()">Request</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
