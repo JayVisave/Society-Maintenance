@@ -53,7 +53,7 @@ export class AllNoticesPage implements OnInit {
             console.log('Type ' + e.payload.doc.data()['type']);
             var generationDate = new Date(e.payload.doc.data()['date']);
             this.tempDate = "";
-            this.tempDate += generationDate.getDay()+" ";
+            this.tempDate += generationDate.getDate()+" ";
             this.tempDate += generationDate.toLocaleString('default', { month: 'short' })+" ";
  
             this.tempDate += generationDate.getFullYear().toString()+" ";
