@@ -26,6 +26,11 @@
     <ion-card-content>
       {{notice.desc}}
     </ion-card-content>
+  
+    <ion-button *ngIf="notice.hA" href="{{notice.d_url | async}}" download  expand="block" >
+      <ion-icon name="cloud-download" slot="end"></ion-icon>
+      Download Notice
+    </ion-button>
   </ion-card>
 
  

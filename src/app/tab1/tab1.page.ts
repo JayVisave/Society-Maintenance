@@ -397,6 +397,7 @@ export class Tab1Page implements OnInit {
     // }
    // else{
       this.pdfObj.download();
+  
     //}
   }
 

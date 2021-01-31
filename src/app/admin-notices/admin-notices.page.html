@@ -33,11 +33,11 @@
     </ion-item>
     <ion-item >
       <ion-label  position="stacked" >Upload File</ion-label>
-      <ion-input type="file" [(ngModel)]="f" (change)="changeListener($event)" required></ion-input>
+      <ion-input type="file" [(ngModel)]="f" (change)="changeListener($event)" accept="image/jpeg,image/png,application/pdf" required></ion-input>
     </ion-item>
   </ion-card>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
-    <ion-fab-button color="secondary" (click)="file_Notice(notice)">
+    <ion-fab-button color="secondary" (click)="file_Notice(notice,f)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
