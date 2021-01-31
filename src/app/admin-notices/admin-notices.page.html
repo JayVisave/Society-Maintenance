@@ -5,6 +5,7 @@
 </ion-header>
 
 <ion-content  [fullscreen]="true">
+  <ion-progress-bar [value]="uploadProgress" color="success"></ion-progress-bar>
   <ion-card color="secondary">
     <ion-card-header> 
       <ion-card-title>New Notice</ion-card-title>
@@ -29,6 +30,10 @@
     <ion-item>
       <ion-label position="stacked">Date</ion-label>
       <ion-input type="date" [(ngModel)]="notice.date" required></ion-input>
+    </ion-item>
+    <ion-item >
+      <ion-label  position="stacked" >Upload File</ion-label>
+      <ion-input type="file" [(ngModel)]="f" (change)="changeListener($event)" required></ion-input>
     </ion-item>
   </ion-card>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" >

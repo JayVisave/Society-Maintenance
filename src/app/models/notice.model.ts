@@ -5,5 +5,5 @@ export interface Notice{
     type: string,
     u_id: string,
     n_id: string,
-    
+    f_id: string,
  }

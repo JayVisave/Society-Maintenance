@@ -12,23 +12,24 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
-
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import {HttpClientModule} from '@angular/common/http';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
-
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     AngularFireModule.initializeApp(environment.FIREBASE_CONFIG)
-    ,AngularFireAuthModule, AngularFirestoreModule,HttpClientModule
+    ,AngularFireAuthModule, AngularFirestoreModule,HttpClientModule,AngularFireStorageModule
     
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    FileOpener
+    FileOpener,
+    InAppBrowser
 
   ],
   bootstrap: [AppComponent]
