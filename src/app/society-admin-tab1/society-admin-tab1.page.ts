@@ -5,16 +5,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
 import { ToastController, LoadingController, NavController } from '@ionic/angular';
-
-import { Observable } from 'rxjs';
-import { finalize, tap } from 'rxjs/operators';
 import { Visitor } from '../models/visitor.model';
+import { File, FileEntry } from '@ionic-native/file';
 
-export interface MyData {
-  name: string;
-  filepath: string;
-  size: number;
-}
 
 @Component({
   selector: 'app-society-admin-tab1',
@@ -26,38 +19,16 @@ export class SocietyAdminTab1Page implements OnInit {
   visitor={} as Visitor;
   societyNames : any;
   public societyName : string;
+  file: File;
+  uploadProgress = 0;
+  id: string;
 
-  task: AngularFireUploadTask;
-
-  percentage: Observable<number>;
-
-  snapshot: Observable<any>;
-
-  fileName:string;
-  fileSize:number;
-
-  isUploading:boolean;
-  isUploaded:boolean;
-
-  UploadedFileURL: Observable<string>;
-
-  images: Observable<MyData[]>;
-
-  private imageCollection: AngularFirestoreCollection<MyData>;
   constructor(
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
-    private afAuth: AngularFireAuth,
-    private navCtrl: NavController,
     private fireStore: AngularFirestore,
     private storage: AngularFireStorage,
   ) { 
-    this.isUploading = false;
-    this.isUploaded = false;
-    //Set collection where our documents/ images info will save
-    this.imageCollection = fireStore.collection<MyData>('visitorImages');
-    this.images = this.imageCollection.valueChanges();
-    
   }
 
   ngOnInit() {
@@ -149,66 +120,67 @@ export class SocietyAdminTab1Page implements OnInit {
   // }
 
 
-  async uploadFile(event: FileList, guest: Visitor)
+  async uploadFile(f: FileEntry)
   {
-    console.log(this.visitor.name);
-    console.log(this.visitor.user);
-    this.fireStore.collection('society').doc(this.visitor.society).collection('users').doc(this.visitor.user).collection('visitors').doc(this.visitor.user).set({...this.visitor});
-    this.fireStore.collection('userDetails').doc(this.visitor.user).collection('visitors').doc(this.visitor.user).set({...this.visitor});
-    this.showToast('Request sent.');
-    const file = event.item(0);
-    if (file.type.split('/')[0] !== 'image') { 
-      console.error('unsupported file type :( ')
-      return;
-     }
-    
-    this.isUploading = true;
-    this.isUploaded = false;
-
-    this.fileName = file.name;
-
-    const path = `visitorImages/${ this.visitor.user}_${file.name}`;
-
-    const fileRef = this.storage.ref(path);
-
-    this.task = this.storage.upload(path, file);
-
-    this.percentage = this.task.percentageChanges();
-    this.snapshot = this.task.snapshotChanges().pipe(
-      finalize(() => {
-        // Get uploaded file storage path
-        this.UploadedFileURL = fileRef.getDownloadURL();
+    if(this.formValidation()){
+      let loader = this.loadingCtrl.create({
+        message: 'Please wait...'
+      });
+      (await loader).present();
+      try{
+        this.id = this.fireStore.createId();
+        this.visitor.f_id = 'none';
         
-        this.UploadedFileURL.subscribe(resp=>{
-          this.addImagetoDB({
-            name: file.name,
-            filepath: resp,
-            size: this.fileSize
-          });
-          this.isUploading = false;
-          this.isUploaded = true;
-        },error=>{
-          console.error(error);
-        })
-      }),
-      tap(snap => {
-          this.fileSize = snap.totalBytes;
-      })
-      )
-      this.showToast('Image uploaded.');
+        if (f != null) {
+        const fileId = this.fireStore.createId();
+        this.uploadProfileImage(fileId);
+        }
+        this.fireStore.collection('society').doc(this.visitor.society).collection('users').doc(this.visitor.user).collection('visitors').doc(this.id).set({...this.visitor});
+        this.fireStore.collection('userDetails').doc(this.visitor.user).collection('visitors').doc(this.id).set({...this.visitor});
+        this.showToast('Request sent.');
+      }
+      catch(e){
+        console.log(e);
+        this.showToast(e);
+      }
+      (await loader).dismiss();
+    }
+  }
+  uploadProfileImage(id: string){
+    const ext = this.file.name.split('.').pop();
+    this.visitor.f_id = id + "." + ext;
+    const fileName = id + "." + ext;
+    const filePath = 'VisitorPhotos/' + fileName;
+    const task = this.storage.upload(filePath, this.file);
+    task.percentageChanges().subscribe(changes => {
+      this.uploadProgress = changes;
+    });
+    task.then(async res => {
+      this.showToast('Photo Upload Finished!');
+    });
+    // let fileRef =  this.storage.storage.ref('VisitorPhotos/' + id + ".jpg");
+    // fileRef.put(this.file).then(function(snapshot) {
+    //   console.log('Uploaded a blob or file!');
+    // });
   }
 
-  addImagetoDB(image: MyData) {
-    //Create an ID for document
-    // const id = this.fireStore.createId();
-
-
-    //Set document id with value in database
-    this.imageCollection.doc(this.visitor.user).set(image).then(resp => {
-      console.log(resp);
-    }).catch(error => {
-      console.log("error " + error);
-    });
+  changeListener($event) : void {
+    this.file = $event.target.files[0];
+  }
+  formValidation(){
+    if(!this.visitor.name){
+      this.showToast('Please provide your name.');
+      return false;
+    }
+    if(!this.visitor.phone){
+      this.showToast('Please provide your phone number.');
+      return false;
+    }
+    if(!this.visitor.reason){
+      this.showToast('Please provide reason of your visit.');
+      return false;
+    }
+    return true;
   }
 
   

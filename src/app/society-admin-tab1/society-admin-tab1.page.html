@@ -36,13 +36,13 @@
       </ion-item>
       <ion-item >
         <ion-label  position="stacked" >Upload photo</ion-label>
-        <ion-input type="file" [(ngModel)]="visitor.photo" required></ion-input>
+        <ion-input type="file" [(ngModel)]="photo" (change)="changeListener($event)" required></ion-input>
       </ion-item>
     </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-button class="ion-padding" color="primary" expand="full" (click)="uploadFile($event.target.files,visitor)">Request</ion-button>
+        <ion-button class="ion-padding" color="primary" expand="full" (click)="uploadFile(photo)">Request</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

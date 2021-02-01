@@ -24,6 +24,10 @@ const routes: Routes = [
         loadChildren: () => import('../tab4/tab4.module').then(m => m.Tab4PageModule)
       },
       {
+        path: 'tab-visitor',
+        loadChildren: () => import('../tab-visitor/tab-visitor.module').then( m => m.TabVisitorPageModule)
+      },
+      {
         path: 'all-notices',
         loadChildren: () => import('../all-notices/all-notices.module').then(m => m.AllNoticesPageModule)
       },

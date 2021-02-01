@@ -63,7 +63,11 @@ const routes: Routes = [
   {
     path: 'admin-notices',
     loadChildren: () => import('./admin-notices/admin-notices.module').then( m => m.AdminNoticesPageModule)
+  },  {
+    path: 'tab-visitor',
+    loadChildren: () => import('./tab-visitor/tab-visitor.module').then( m => m.TabVisitorPageModule)
   }
+
 
 
   

@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>tab-visitor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="getVisitors($event)"></ion-refresher>
+  <ion-card class="white-card" *ngFor="let v of visitors">
+    <ion-grid>
+      <ion-row>
+          <ion-item>
+            <!-- <ion-img [src]="{{v.d_url | async}}"></ion-img> -->
+            <img [src]="v.d_url | async" />
+          </ion-item>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Name</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>{{v.name}}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Phone</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>{{v.phone}}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label>Reason</ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{v.reason}}</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-item  >
+      <ion-button class="ion-no-margin ion-margin-end ion-margin-bottom" expand="block" size="default" color="danger">Reject</ion-button>
+      <ion-button class="ion-margin-bottom  " expand="block" size="default" slot="end" color="success" >Accept</ion-button>
+    </ion-item>
+  </ion-card>
+</ion-content>
