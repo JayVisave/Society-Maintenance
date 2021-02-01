@@ -48,8 +48,8 @@ export class TabVisitorPage implements OnInit {
         this.visitors = data.map(e=>{
          console.log('Type '+e.payload.doc.data()['f_id']);
          if (e.payload.doc.data()['f_id'] != 'none') {
-          // const loc = e.payload.doc.data()['f_id'].toString();
-          const ref = this.storage.ref('VisitorPhotos/U9labJQbO2HsceqUutmt.jpg');
+          const loc = e.payload.doc.data()['f_id'].toString();
+          const ref = this.storage.ref('VisitorPhotos/'+loc);
           console.log('ref ', ref);
           this.downloadUrl = ref.getDownloadURL();
          }
