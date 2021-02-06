@@ -66,6 +66,10 @@ const routes: Routes = [
   },  {
     path: 'tab-visitor',
     loadChildren: () => import('./tab-visitor/tab-visitor.module').then( m => m.TabVisitorPageModule)
+  },
+  {
+    path: 'society-all-visitors',
+    loadChildren: () => import('./society-all-visitors/society-all-visitors.module').then( m => m.SocietyAllVisitorsPageModule)
   }
 
 

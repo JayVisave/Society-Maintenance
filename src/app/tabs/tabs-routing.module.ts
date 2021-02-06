@@ -59,6 +59,10 @@ const routes: Routes = [
         path: 'society-admin-tab2',
         loadChildren: () => import('../society-admin-tab2/society-admin-tab2.module').then(m => m.SocietyAdminTab2PageModule)
       },
+      {
+        path: 'society-all-visitors',
+        loadChildren: () => import('../society-all-visitors/society-all-visitors.module').then( m => m.SocietyAllVisitorsPageModule)
+      },
     ]
   },
   {

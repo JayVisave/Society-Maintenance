@@ -102,23 +102,6 @@ export class SocietyAdminTab1Page implements OnInit {
 
   }
 
-  // async visitRequest(guest : Visitor)
-  // {
-  //   const loader = this.loadingCtrl.create({
-  //     message: 'Please wait...'
-  //   });
-  //   (await loader).present();
-  //   try{
-  //     // const userid = guest.user;
-  //   this.uploadFile() 
-      
-  //   }
-  //   catch (e){
-  //     this.showToast(e);
-  //   }
-  //   setTimeout(() => {}, 1000);
-  // }
-
 
   async uploadFile(f: FileEntry)
   {
@@ -135,8 +118,11 @@ export class SocietyAdminTab1Page implements OnInit {
         const fileId = this.fireStore.createId();
         this.uploadProfileImage(fileId);
         }
+        this.visitor.status ='Pending';
+        this.visitor.req_id = this.id;
         this.fireStore.collection('society').doc(this.visitor.society).collection('users').doc(this.visitor.user).collection('visitors').doc(this.id).set({...this.visitor});
         this.fireStore.collection('userDetails').doc(this.visitor.user).collection('visitors').doc(this.id).set({...this.visitor});
+        this.fireStore.collection('society').doc(this.visitor.society).collection('visitors').doc(this.id).set({...this.visitor});
         this.showToast('Request sent.');
       }
       catch(e){

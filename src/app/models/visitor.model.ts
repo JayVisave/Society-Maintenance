@@ -4,5 +4,7 @@ export interface Visitor{
     society:string,
     user:string,
     reason:string,
-    f_id:string
+    f_id:string,
+    status:string,
+    req_id:string,
 }

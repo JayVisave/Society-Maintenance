@@ -1,6 +1,7 @@
 <ion-tabs>
 
   <ion-tab-bar slot="bottom">
+    <!-- admin section -->
     <ion-tab-button *ngIf="typeUser && !typeUser2" tab="admin-tab1">
       <ion-icon name="business-sharp"></ion-icon>
     </ion-tab-button>
@@ -13,6 +14,7 @@
     <ion-tab-button *ngIf="typeUser && !typeUser2" tab="admin-tab3">
       <ion-icon name="create-outline"></ion-icon>
     </ion-tab-button>
+    <!-- user section -->
     <ion-tab-button *ngIf="!typeUser && !typeUser2" tab="tab1">
       <ion-icon name="receipt-sharp"></ion-icon>
     </ion-tab-button>
@@ -27,15 +29,20 @@
     <ion-tab-button *ngIf="!typeUser && !typeUser2" tab="tab-visitor">
       <ion-icon name="man-outline"></ion-icon>
     </ion-tab-button>
+    <!-- society section -->
     <ion-tab-button *ngIf="!typeUser && !typeUser2" tab="all-notices">
       <ion-icon name="clipboard-outline"></ion-icon>
     </ion-tab-button>
     <ion-tab-button *ngIf="!typeUser && typeUser2" tab="society-admin-tab1">
       <ion-icon name="man-outline"></ion-icon>
     </ion-tab-button>
+    <ion-tab-button *ngIf="!typeUser && typeUser2" tab="society-all-visitors">
+      <ion-icon name="man-outline"></ion-icon>
+    </ion-tab-button>
     <ion-tab-button *ngIf="!typeUser && typeUser2" tab="society-admin-tab2">
       <ion-icon name="clipboard-outline"></ion-icon>
     </ion-tab-button>
+
     <ion-tab-button *ngIf="!typeUser && typeUser2" tab="admin-notices">
       <ion-icon name="documents-outline"></ion-icon>
     </ion-tab-button>

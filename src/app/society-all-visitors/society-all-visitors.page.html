@@ -1,12 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>VISITORS</ion-title>
+    <ion-title>VISITOR REQUESTS</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="getVisitors($event)"></ion-refresher>
-  <ion-card class="white-card" *ngFor="let v of visitors">
+  <ion-card *ngFor="let v of visitors">
     <ion-grid>
       <ion-row>
           <ion-item>
@@ -50,10 +50,47 @@
             </ion-item>
           </ion-col>
         </ion-row>
+        <!-- <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label>Desicion</ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{v.status}}</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row> -->
+        <div *ngIf="v.status == 'accept'; else elseBlock">
+          <ion-row  >
+            <ion-col>
+              <ion-item color="secondary">
+                <ion-label>Desicion</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item color="secondary">
+                <ion-label>{{v.status}}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </div>
+        <ng-template #elseBlock>
+          <ion-row  >
+            <ion-col>
+              <ion-item color="danger">
+                <ion-label>Desicion</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item color="danger">
+                <ion-label>{{v.status}}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ng-template>
     </ion-grid>
-    <ion-item  >
-      <ion-button class="ion-no-margin ion-margin-end ion-margin-bottom" expand="block" size="default" (click)="updateDecision(v,'reject')" color="danger">Reject</ion-button>
-      <ion-button class="ion-margin-bottom  " expand="block" size="default" slot="end" (click)="updateDecision(v,'accept')" color="success" >Accept</ion-button>
-    </ion-item>
+    
   </ion-card>
 </ion-content>
