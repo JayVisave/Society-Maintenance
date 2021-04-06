@@ -12,7 +12,7 @@ import { File, FileEntry } from '@ionic-native/file';
   styleUrls: ['./admin-notices.page.scss'],
 })
 export class AdminNoticesPage implements OnInit {
-
+  minDate: String = new Date().toISOString();
   generationDate: string;
   notice = {} as Notice;
   uploadProgress = 0;
@@ -27,6 +27,7 @@ export class AdminNoticesPage implements OnInit {
   ) { }
   ngOnInit() {
     // this.getComplaints(event);
+
   }
 
   // async getComplaints(event){
@@ -95,26 +96,17 @@ export class AdminNoticesPage implements OnInit {
         if (f != null) {
           const fileId = this.fireStore.createId();
           this.uploadNotice(fileId);
+          console.log('File entry 2 ', f.toString().split('.').pop());
+          const ext = f.toString().split('.').pop();
+          this.notice.f_id = fileId + "." + ext;
         }
         this.fireStore.collection('society').doc(GlobalService.societyId).collection('Notices').doc(this.notice.n_id).set({ ...this.notice });
-        // this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('Complaint').doc(this.complaint.c_id).set({...this.complaint});
-        //  if(f != null){
-
-        //   const path = f.nativeURL.substr(0,f.nativeURL.lastIndexOf(('/')+1));
-        //   const buffer = await File.readAsArrayBuffer(path,f.name);
-        //   const type =  this.getMimeType(f.name.split('.').pop());
-        //   const fileBlob =  new Blob([buffer],type);
-
-
-        //   const uploadTask = this.storage.upload(`societyNoticeFiles/${fileId}`, fileBlob);
-        //   uploadTask.percentageChanges().subscribe(changes=>{
-        //     this.uploadProgress = changes;
-        //   });
-        //   uploadTask.then(async res=>{
-        //     this.showToast('File Upload Finished!');
-        //   })
-        // }
-
+        notice.date = "";
+        notice.desc = "";
+        notice.title = "";
+        notice.type = "";
+        // f=null;
+        // f.fullPath = "";
 
       }
 
@@ -141,29 +133,41 @@ export class AdminNoticesPage implements OnInit {
   changeListener($event): void {
     this.file = $event.target.files[0];
   }
-  uploadNotice(id: string) {
-    console.log('Name ', this.file.name);
-    console.log('ext ', this.file.name.split('.').pop());
-    const ext = this.file.name.split('.').pop();
-    this.notice.f_id = id + "." + ext;
-    // let fileRef =  this.storage.storage.ref('societyNoticesMedia/' + id +"."+ ext);
-    // this.uploadProgress= fileRef.put(this.file).snapshot.bytesTransferred.;
-
-    // fileRef.put(this.file).then(function(snapshot) {
-
-    //   console.log('Uploaded a blob or file!');
-    // });
-    const fileName = id + "." + ext;
-    const filePath = 'societyNoticesMedia/' + fileName;
-    // const fileRef = this.storage.ref(filePath);
-    const task = this.storage.upload(filePath, this.file);
-    task.percentageChanges().subscribe(changes => {
-      this.uploadProgress = changes;
+  async uploadNotice(id: string) {
+    let loader = this.loadingCtrl.create({
+      message: 'Please wait...'
     });
-    task.then(async res => {
-      this.showToast('File Upload Finished!');
-    });
+    (await loader).present();
+    try {
+      this.showToast('Uploading File...Please Wait!');
+      console.log('Name ', this.file.name);
+      console.log('ext ', this.file.name.split('.').pop());
+      const ext = this.file.name.split('.').pop();
+      this.notice.f_id = id + "." + ext;
+      // let fileRef =  this.storage.storage.ref('societyNoticesMedia/' + id +"."+ ext);
+      // this.uploadProgress= fileRef.put(this.file).snapshot.bytesTransferred.;
 
+      // fileRef.put(this.file).then(function(snapshot) {
+
+      //   console.log('Uploaded a blob or file!');
+      // });
+      const fileName = id + "." + ext;
+      const filePath = 'societyNoticesMedia/' + fileName;
+      // const fileRef = this.storage.ref(filePath);
+      const task = this.storage.upload(filePath, this.file);
+      task.percentageChanges().subscribe(changes => {
+        this.uploadProgress = changes;
+      });
+      task.then(async res => {
+        this.showToast('File Upload Finished!');
+      });
+    }
+    catch (e) {
+      console.log(e);
+      this.showToast(e);
+
+    }
+    (await loader).dismiss();
 
 
   }

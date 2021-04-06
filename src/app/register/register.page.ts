@@ -70,6 +70,8 @@ export class RegisterPage implements OnInit {
     });
     (await loader).present();
     try{
+      this.userDetails.wing="";
+      this.userDetails.flatNumber=null;
     this.fireStore.firestore.collection('society').doc(tempID).get().then(data => {
       this.indexesWing= [];
       this.tempSocietyName = data.data()['name'];

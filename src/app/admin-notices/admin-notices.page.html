@@ -27,9 +27,10 @@
       <ion-label position="stacked">Description</ion-label>
       <ion-input type="text" [(ngModel)]="notice.desc" required></ion-input>
     </ion-item>
+
     <ion-item>
-      <ion-label position="stacked">Date</ion-label>
-      <ion-input type="date" [(ngModel)]="notice.date" required></ion-input>
+      <ion-label>Start Date</ion-label>
+      <ion-datetime  [min]="minDate"[(ngModel)]="notice.date" placeholder="Select Date"></ion-datetime>
     </ion-item>
     <ion-item >
       <ion-label  position="stacked" >Upload File</ion-label>
