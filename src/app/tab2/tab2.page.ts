@@ -99,6 +99,9 @@ export class Tab2Page implements OnInit{
         this.societyComplaint.isSolved = this.complaint.isSolved;
         this.societyComplaint.u_id = GlobalService.userId;
         this.societyComplaint.c_id = this.complaint.c_id;
+        var generationDate = new Date();
+        this.societyComplaint.year = generationDate.getFullYear();
+        this.societyComplaint.mon = generationDate.getMonth();
         this.fireStore.collection('society').doc(GlobalService.societyId).collection('Complaints').doc(this.complaint.c_id).set({...this.societyComplaint});
         this.complaint.isSolved = "Unsolved";
         this.fireStore.collection('userDetails').doc(GlobalService.userId).collection('Complaint').doc(this.complaint.c_id).set({...this.complaint});

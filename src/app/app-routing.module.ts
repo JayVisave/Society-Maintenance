@@ -53,8 +53,8 @@ const routes: Routes = [
     loadChildren: () => import('./society-admin-tab2/society-admin-tab2.module').then( m => m.SocietyAdminTab2PageModule)
   },
   {
-    path: 'tab4',
-    loadChildren: () => import('./tab4/tab4.module').then( m => m.Tab4PageModule)
+    path: 'society-admin-tab3',
+    loadChildren: () => import('./society-admin-tab3/society-admin-tab3.module').then( m => m.SocietyAdminTab3PageModule)
   },
   {
     path: 'all-notices',
@@ -63,7 +63,8 @@ const routes: Routes = [
   {
     path: 'admin-notices',
     loadChildren: () => import('./admin-notices/admin-notices.module').then( m => m.AdminNoticesPageModule)
-  },  {
+  },
+  {
     path: 'tab-visitor',
     loadChildren: () => import('./tab-visitor/tab-visitor.module').then( m => m.TabVisitorPageModule)
   },

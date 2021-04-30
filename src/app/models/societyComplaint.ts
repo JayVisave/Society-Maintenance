@@ -7,4 +7,6 @@ export interface societyComplaint{
     wing: string,
     c_id: string,
     u_id: string,
+    year: number,
+    mon: number,
  }
