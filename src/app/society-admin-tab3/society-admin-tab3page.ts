@@ -10,10 +10,21 @@ import { ToastController, LoadingController } from '@ionic/angular';
 })
 export class SocietyAdminTab3Page implements OnInit {
 
-
+  lif: number;
+  leak: number;
+  par: number;
+  sec: number;
+  oth: number;
+  tot: number;
+  slif: number;
+  sleak: number;
+  spar: number;
+  ssec: number;
+  soth: number;
+  stot: number;
   complaints:any;
   complaintsSolved:any;
-  isSet:boolean;
+
   constructor( private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
     private fireStore: AngularFirestore,) { }
@@ -28,7 +39,10 @@ export class SocietyAdminTab3Page implements OnInit {
     });
     (await loader).present();
     try {
-      this.isSet=false;
+      this.lif=0;this.par=0;this.leak=0;this.sec=0;this.oth=0;
+      this.slif=0;this.spar=0;this.sleak=0;this.ssec=0;this.soth=0;
+      this.stot=0;
+      this.tot=0;
       GlobalService.userId = await get('userId');
 
       console.log('Global ' + GlobalService.userId);
@@ -48,52 +62,53 @@ export class SocietyAdminTab3Page implements OnInit {
     
 
   }
-  getComplaintDetails(date: any){
+  async getComplaintDetails(date: any){
     var generationDate = new Date(date);
     var month = generationDate.getMonth();
     var year = generationDate.getFullYear();
     console.log(generationDate.getFullYear());
-    this.fireStore.collection('society').doc(GlobalService.societyId).collection('Complaints', ref => ref.where('mon', '==',month).where("year", "==", year)).snapshotChanges().subscribe( data => {
+    console.log("Month ",month," Year", year);
+    this.fireStore.collection('society').doc(GlobalService.societyId).collection('Complaints', ref => ref.where("mon", "==",month).where("year", "==", year)).snapshotChanges().subscribe( data => {
       this.complaints = data.map(e => {
+        console.log("Month ",month," Year", year);
         console.log('Type ' + e.payload.doc.data()['type']);
-        var lif=0,leak=0,par=0,sec=0,oth=0,tot=0;
-        if(e.payload.doc.data()['comp_type'] == 'Parking' ){par+=1;}
-        else if(e.payload.doc.data()['comp_type'] == 'Other'){oth+=1;}
-        else if(e.payload.doc.data()['comp_type'] == 'Lift'){lif+=1;}
-        else if(e.payload.doc.data()['comp_type'] == 'Leakage'){leak+=1;}
-        else if(e.payload.doc.data()['comp_type'] == 'Security'){sec+=1;}
-        tot = lif+par+leak+sec+oth;
-        return{
-        lift: lif,
-        parking: par,
-        leakage: leak,
-        security: sec,
-        others: oth,
-        total : tot
-      };
+        if(e.payload.doc.data()['comp_type'] == 'Parking' ){this.par+=1;}
+        else if(e.payload.doc.data()['comp_type'] == 'Other'){this.oth+=1;}
+        else if(e.payload.doc.data()['comp_type'] == 'Lift'){this.lif+=1;}
+        else if(e.payload.doc.data()['comp_type'] == 'Leakage'){this.leak+=1;}
+        else if(e.payload.doc.data()['comp_type'] == 'Security'){this.sec+=1;}
+        this.tot = this.lif+this.par+this.leak+this.sec+this.oth;
+      //   return{
+      //   lift: this.lif,
+      //   parking: this.par,
+      //   leakage: this.leak,
+      //   security: this.sec,
+      //   others: this.oth,
+      //   total : this.tot
+      // };
       });
     });
     this.fireStore.collection('society').doc(GlobalService.societyId).collection('Complaints', ref => ref.where('mon', '==',month).where("year", "==", year).where("isSolved", "==", "Solved")).snapshotChanges().subscribe( data => {
       this.complaintsSolved = data.map(e => {
         console.log('Type ' + e.payload.doc.data()['type']);
-        var lif=0,leak=0,par=0,sec=0,oth=0,tot=0;
-        if(e.payload.doc.data()['comp_type'] == 'Parking' ){par+=1;}
-        else if(e.payload.doc.data()['comp_type'] == 'Other'){oth+=1;}
-        else if(e.payload.doc.data()['comp_type'] == 'Lift'){lif+=1;}
-        else if(e.payload.doc.data()['comp_type'] == 'Leakage'){leak+=1;}
-        else if(e.payload.doc.data()['comp_type'] == 'Security'){sec+=1;}
-        tot = lif+par+leak+sec+oth;
-        return{
-        lift: lif,
-        parking: par,
-        leakage: leak,
-        security: sec,
-        others: oth,
-        total : tot
-      };
+
+        if(e.payload.doc.data()['comp_type'] == 'Parking' ){this.spar+=1;}
+        else if(e.payload.doc.data()['comp_type'] == 'Other'){this.soth+=1;}
+        else if(e.payload.doc.data()['comp_type'] == 'Lift'){this.slif+=1;}
+        else if(e.payload.doc.data()['comp_type'] == 'Leakage'){this.sleak+=1;}
+        else if(e.payload.doc.data()['comp_type'] == 'Security'){this.ssec+=1;}
+        this.stot = this.slif+this.spar+this.sleak+this.ssec+this.soth;
+      //   return{
+      //   lift: lif,
+      //   parking: par,
+      //   leakage: leak,
+      //   security: sec,
+      //   others: oth,
+      //   total : tot
+      // };
       });
     });
-    this.isSet = true;
+  
   }
   
   showToast(message: string) {
