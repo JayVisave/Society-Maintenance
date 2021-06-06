@@ -22,6 +22,8 @@ export class SocietyAdminTab3Page implements OnInit {
   ssec: number;
   soth: number;
   stot: number;
+  dismonth: any;
+  disyear: any;
   complaints:any;
   complaintsSolved:any;
 
@@ -63,10 +65,17 @@ export class SocietyAdminTab3Page implements OnInit {
 
   }
   async getComplaintDetails(date: any){
+    this.lif=0;this.par=0;this.leak=0;this.sec=0;this.oth=0;
+      this.slif=0;this.spar=0;this.sleak=0;this.ssec=0;this.soth=0;
+      this.stot=0;
+      this.tot=0;
     var generationDate = new Date(date);
     var month = generationDate.getMonth();
     var year = generationDate.getFullYear();
+    this.disyear = generationDate.getFullYear();
+    this.dismonth = generationDate.toLocaleString('default', { month: 'short' });
     console.log(generationDate.getFullYear());
+
     console.log("Month ",month," Year", year);
     this.fireStore.collection('society').doc(GlobalService.societyId).collection('Complaints', ref => ref.where("mon", "==",month).where("year", "==", year)).snapshotChanges().subscribe( data => {
       this.complaints = data.map(e => {
