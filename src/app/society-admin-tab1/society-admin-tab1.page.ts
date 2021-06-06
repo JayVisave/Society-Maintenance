@@ -33,38 +33,11 @@ export class SocietyAdminTab1Page implements OnInit {
 
   ngOnInit() {
     this.getData();
-    this.getSocietyDetails(event);
+    this.getUserDetails();
     console.log("Page initialized ");
   }
   
-  async getSocietyDetails(event){
-    const loader = this.loadingCtrl.create({
-      message: 'Please wait...'
-    });
-    (await loader).present();
-    try{
-    this.fireStore.collection('society').snapshotChanges().subscribe(data => {
-      this.societyNames = data.map(e=>{
-        return{
-          name: e.payload.doc.data()['name'],
-          wings: e.payload.doc.data()['wings'],
-          flats: e.payload.doc.data()['flatsPerWing'],
-          id: e.payload.doc.data()['id']
-        }
-      })
-    });
-    (await loader).dismiss();
-  }
-  catch (e){
-    this.showToast(e);
-  }
-  setTimeout(() => {
-
-    event.target.complete();
-  }, 1000);
-  }
-
-  async getUserDetails(tempID : any){
+  async getUserDetails(){
     const loader = this.loadingCtrl.create({
       message: 'Please wait...'
     });
@@ -74,10 +47,11 @@ export class SocietyAdminTab1Page implements OnInit {
 
       // var day = generationDate.getDay();
       GlobalService.userId = await get('userId');
-      console.log('Global ' +  GlobalService.userId);
+      GlobalService.societyId = await get('societyID');
+      console.log('Global ' + GlobalService.societyId);
 
 
-    this.fireStore.collection('society').doc(tempID).collection('users').snapshotChanges().subscribe( data => {
+    this.fireStore.collection('society').doc(GlobalService.societyId).collection('users').snapshotChanges().subscribe( data => {
     this.users = data.map(e => {
      // console.log('Type ' + e.payload.doc.data()['type']);
      this.societyName = e.payload.doc.data()['societyName'];

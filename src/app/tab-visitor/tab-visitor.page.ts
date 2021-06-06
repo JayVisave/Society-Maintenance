@@ -82,8 +82,8 @@ export class TabVisitorPage implements OnInit {
     try{
     console.log("society_id:" + reqRef.soc_id);
     this.fireStore.collection('society').doc(reqRef.soc_id).collection('visitors').doc(reqRef.req_id).update({"status": d});
-    this.fireStore.collection('userDetails').doc(reqRef.u_id).collection('visitors').doc(reqRef.req_id).update({"status": d});
     this.fireStore.collection('society').doc(reqRef.soc_id).collection('users').doc(reqRef.u_id).collection('visitors').doc(reqRef.req_id).update({"status": d});
+    this.fireStore.collection('userDetails').doc(reqRef.u_id).collection('visitors').doc(reqRef.req_id).delete();
     this.showToast("Updated successfully.");
     }
     catch(e)
