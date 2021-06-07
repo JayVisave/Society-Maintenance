@@ -61,7 +61,7 @@ export class AdminNoticesPage implements OnInit {
   async file_Notice(notice: Notice, f: FileEntry) {
     // console.log('Try ',f.nativeURL)
     // return;
-    if (this.formValidation()) {
+    if (this.formValidation(f)) {
 
       let loader = this.loadingCtrl.create({
         message: 'Please wait...'
@@ -99,7 +99,10 @@ export class AdminNoticesPage implements OnInit {
           console.log('File entry 2 ', f.toString().split('.').pop());
           const ext = f.toString().split('.').pop();
           this.notice.f_id = fileId + "." + ext;
+          console.log('ext',ext)
+        
         }
+        
         this.fireStore.collection('society').doc(GlobalService.societyId).collection('Notices').doc(this.notice.n_id).set({ ...this.notice });
         notice.date = "";
         notice.desc = "";
@@ -176,7 +179,7 @@ export class AdminNoticesPage implements OnInit {
   //   if (fileExt == 'jpg') return { type: 'image/jpg' };
   //   // else if (fileExt == 'pdf') return { type: 'media/pdf' };
   // }
-  formValidation() {
+  formValidation(f: FileEntry) {
     if (!this.notice.title) {
       this.showToast('Please provide title for your notice.');
       return false;
@@ -193,7 +196,14 @@ export class AdminNoticesPage implements OnInit {
       this.showToast('Select type of notice.');
       return false;
     }
-    return true;
+    const ext = f.toString().split('.').pop();
+    if(ext=='pdf' || ext=='jpg' || ext=='jpeg' || ext=='png'){
+      return true;
+    }
+    else{
+      this.showToast("Invalid file type.");
+      return false;
+    }
   }
   showToast(message: string) {
     this.toastCtrl.create({ message: message, duration: 3000, }).then(toastData => toastData.present());

@@ -16,6 +16,7 @@ export class SocietyAdminTab2Page implements OnInit {
   hasAttachment: boolean;
   tempID: string;
   downloadUrl: Observable<string | null>;
+  s_id: string;
   constructor(private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private fireStore: AngularFirestore,
@@ -50,6 +51,7 @@ export class SocietyAdminTab2Page implements OnInit {
       this.fireStore.firestore.collection('userDetails').doc(GlobalService.userId).get()
         .then(doc => {
           set('societyID', doc.data()['societyID']);
+         
         });
 
       GlobalService.societyId = await get('societyID');
