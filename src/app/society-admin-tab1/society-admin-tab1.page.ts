@@ -38,6 +38,7 @@ export class SocietyAdminTab1Page implements OnInit {
   }
   
   async getUserDetails(){
+   
     const loader = this.loadingCtrl.create({
       message: 'Please wait...'
     });
@@ -79,7 +80,7 @@ export class SocietyAdminTab1Page implements OnInit {
 
   async uploadFile(f: FileEntry)
   {
-    if(this.formValidation()){
+    if(this.formValidation(f)){
       let loader = this.loadingCtrl.create({
         message: 'Please wait...'
       });
@@ -127,7 +128,7 @@ export class SocietyAdminTab1Page implements OnInit {
   changeListener($event) : void {
     this.file = $event.target.files[0];
   }
-  formValidation(){
+  formValidation(f: FileEntry){
     if(!this.visitor.name){
       this.showToast('Please provide your name.');
       return false;
@@ -140,7 +141,15 @@ export class SocietyAdminTab1Page implements OnInit {
       this.showToast('Please provide reason of your visit.');
       return false;
     }
-    return true;
+    const ext = f.toString().split('.').pop();
+    if(ext=='jpg' || ext=='jpeg' || ext=='png'){
+      return true;
+    }
+    else{
+      this.showToast("Invalid file type.");
+      return false;
+    }
+ 
   }
 
   

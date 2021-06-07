@@ -35,7 +35,7 @@
       </ion-item>
       <ion-item >
         <ion-label  position="stacked" >Upload photo</ion-label>
-        <ion-input type="file" [(ngModel)]="photo" (change)="changeListener($event)" required></ion-input>
+        <ion-input type="file" [(ngModel)]="photo" (change)="changeListener($event)"  accept="image/jpeg,image/png" required></ion-input>
       </ion-item>
     </ion-col>
     </ion-row>
