@@ -82,7 +82,7 @@ export class SocietyAdminTab1Page implements OnInit {
       GlobalService.userId = await get('userId');
       GlobalService.societyId = await get('societyID');
       console.log('Global ' + GlobalService.societyId);
-
+      this.visitor.society = GlobalService.societyId;
 
       this.fireStore.collection('society').doc(GlobalService.societyId).collection('users').snapshotChanges().subscribe(data => {
         this.users = data.map(e => {
@@ -128,6 +128,15 @@ export class SocietyAdminTab1Page implements OnInit {
           this.uploadProfileImage(this.id, false);
         }
         this.visitor.status = 'Pending';
+        
+        let date: Date = new Date();
+        console.log('hours' + date.getDate() );
+        console.log('minutes' + date.getMinutes() );
+        this.visitor.time = (date.getHours() > 12) ? (date.getHours()-12 + ':' + date.getMinutes() + ' PM') : (date.getHours() + ':' + date.getMinutes() + ' AM');
+        console.log('full time ' + this.visitor.time)
+        console.log('string time ' + date.toDateString());
+        this.visitor.date = date.getDate()+' '+date.toLocaleString('default', { month: 'short' })+' '+date.getFullYear();
+
         this.visitor.req_id = this.id;
         console.log("This id ", this.visitor.society);
         this.fireStore.collection('society').doc(this.visitor.society).collection('users').doc(this.visitor.user).collection('visitors').doc(this.id).set({ ...this.visitor });
@@ -216,8 +225,12 @@ export class SocietyAdminTab1Page implements OnInit {
   }
 
 
-
-  async getData() {
+  async getData(){
+    let date: Date = new Date();
+    console.log('date ' + date.getDate() );
+    console.log('month ' + date.toLocaleString('default', { month: 'short' }));
+    console.log('year ' + date.getFullYear() );
+    console.log('string time ' + date.toDateString());
     GlobalService.userId = await get('userId');
     console.log("ID ", GlobalService.userId);
     GlobalService.userCode = await get('userCode');

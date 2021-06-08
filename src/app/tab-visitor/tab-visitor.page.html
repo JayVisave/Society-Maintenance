@@ -50,6 +50,30 @@
             </ion-item>
           </ion-col>
         </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label>Date</ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{v.date}}</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label>Time</ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{v.time}}</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
     </ion-grid>
     <ion-item  >
       <ion-button class="ion-no-margin ion-margin-end ion-margin-bottom" expand="block" size="default" (click)="updateDecision(v,'reject')" color="danger">Reject</ion-button>

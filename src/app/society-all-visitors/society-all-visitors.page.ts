@@ -58,6 +58,8 @@ export class SocietyAllVisitorsPage implements OnInit {
            soc_id: e.payload.doc.data()['society'],
            u_id: e.payload.doc.data()['user'],
            d_url: this.downloadUrl,
+           date: e.payload.doc.data()['date'],
+           time: e.payload.doc.data()['time'],
          }
        })
       })
