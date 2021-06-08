@@ -50,7 +50,7 @@ export class SocietyAdminTab1Page implements OnInit {
       GlobalService.userId = await get('userId');
       GlobalService.societyId = await get('societyID');
       console.log('Global ' + GlobalService.societyId);
-
+      this.visitor.society = GlobalService.societyId;
 
     this.fireStore.collection('society').doc(GlobalService.societyId).collection('users').snapshotChanges().subscribe( data => {
     this.users = data.map(e => {
@@ -93,6 +93,13 @@ export class SocietyAdminTab1Page implements OnInit {
         const fileId = this.fireStore.createId();
         this.uploadProfileImage(fileId);
         }
+        
+        let date: Date = new Date();
+        console.log('hours' + date.getDate() );
+        console.log('minutes' + date.getMinutes() );
+        this.visitor.time = (date.getHours() > 12) ? (date.getHours()-12 + ':' + date.getMinutes() + ' PM') : (date.getHours() + ':' + date.getMinutes() + ' AM');
+        console.log('full time ' + this.visitor.time)
+        this.visitor.date = date.getDate()+'/'+date.getMonth()+'/'+date.getFullYear();
         this.visitor.status ='Pending';
         this.visitor.req_id = this.id;
         this.fireStore.collection('society').doc(this.visitor.society).collection('users').doc(this.visitor.user).collection('visitors').doc(this.id).set({...this.visitor});
@@ -155,6 +162,10 @@ export class SocietyAdminTab1Page implements OnInit {
   
 
   async getData(){
+    let date: Date = new Date();
+    console.log('date ' + date.getDate() );
+    console.log('month ' + date.getMonth() );
+    console.log('year ' + date.getFullYear() );
     GlobalService.userId = await get('userId');
     console.log("ID ",GlobalService.userId);
     GlobalService.userCode = await get('userCode');

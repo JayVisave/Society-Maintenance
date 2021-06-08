@@ -7,4 +7,6 @@ export interface Visitor{
     f_id:string,
     status:string,
     req_id:string,
+    date:string,
+    time:string,
 }
