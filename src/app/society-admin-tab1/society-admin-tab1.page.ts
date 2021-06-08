@@ -142,13 +142,16 @@ export class SocietyAdminTab1Page implements OnInit {
         this.fireStore.collection('society').doc(this.visitor.society).collection('users').doc(this.visitor.user).collection('visitors').doc(this.id).set({ ...this.visitor });
         this.fireStore.collection('userDetails').doc(this.visitor.user).collection('visitors').doc(this.id).set({ ...this.visitor });
         this.fireStore.collection('society').doc(this.visitor.society).collection('visitors').doc(this.id).set({ ...this.visitor });
-        this.showToast('Uploading Details.');
+        this.showToast('Uploading Details...');
       }
       catch (e) {
         console.log(e);
         this.showToast(e);
       }
       (await loader).dismiss();
+      this.visitor.name = "";
+      this.visitor.phone = "";
+      this.visitor.reason = "";
     }
   }
   async uploadProfileImage(id: string, opt: boolean) {
@@ -163,7 +166,7 @@ export class SocietyAdminTab1Page implements OnInit {
         this.uploadProgress = changes;
       });
       task.then(async res => {
-        this.showToast('Photo Upload Finished!');
+        this.showToast('Request Sent Successfully!');
       });
     }
     else {
@@ -180,9 +183,10 @@ export class SocietyAdminTab1Page implements OnInit {
       });
       task.then(async res => {
         this.showToast('Request Sent Successfully!');
+      
 
       });
-
+      
     }
 
 
