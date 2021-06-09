@@ -132,7 +132,7 @@ export class SocietyAdminTab1Page implements OnInit {
         let date: Date = new Date();
         console.log('hours' + date.getDate() );
         console.log('minutes' + date.getMinutes() );
-        this.visitor.time = (date.getHours() > 12) ? (date.getHours()-12 + ':' + date.getMinutes() + ' PM') : (date.getHours() + ':' + date.getMinutes() + ' AM');
+        this.visitor.time = (date.getHours() >= 12) ? (date.getHours()-12 + ':' + date.getMinutes() + ' PM') : (date.getHours() + ':' + date.getMinutes() + ' AM');
         console.log('full time ' + this.visitor.time)
         console.log('string time ' + date.toDateString());
         this.visitor.date = date.getDate()+' '+date.toLocaleString('default', { month: 'short' })+' '+date.getFullYear();
