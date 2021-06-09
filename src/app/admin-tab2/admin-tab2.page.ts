@@ -41,7 +41,7 @@ export class AdminTab2Page implements OnInit {
     try{
     this.fireStore.collection('society').snapshotChanges().subscribe(data => {
       this.societyNames = data.map(e=>{
-        this.societyRef = e.payload.doc.data()['id'];
+        
         return{
           name: e.payload.doc.data()['name'],
           id: e.payload.doc.data()['id']
@@ -88,6 +88,7 @@ export class AdminTab2Page implements OnInit {
       //     }
       //   })
       //  })
+      this.societyRef = SocietyID;
        this.fireStore.collection('society').doc(SocietyID).collection('Complaints',ref => ref.where("isSolved","==","Unsolved")).snapshotChanges().subscribe( data => {
         this.allComplaints = data.map(e => {
         
@@ -119,6 +120,7 @@ export class AdminTab2Page implements OnInit {
       (await loader).present();
       try{
         console.log("hello "+ complaintRef.c_id);
+        console.log("sc "+ this.societyRef);
         // this.fireStore.collection('society').doc(this.societyRef).collection('Complaints').doc(complaintRef.c_id).delete();
         this.fireStore.collection('society').doc(this.societyRef).collection('Complaints').doc(complaintRef.c_id).update({"isSolved": "Solved"});
         this.fireStore.collection('userDetails').doc(complaintRef.u_id).collection('Complaint').doc(complaintRef.c_id).update({"isSolved": "Solved"});
