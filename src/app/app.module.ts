@@ -16,12 +16,16 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import {HttpClientModule} from '@angular/common/http';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
+const config: SocketIoConfig = { url: 'http://localhost:3001',options: {}};
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     AngularFireModule.initializeApp(environment.FIREBASE_CONFIG)
-    ,AngularFireAuthModule, AngularFirestoreModule,HttpClientModule,AngularFireStorageModule
+    ,AngularFireAuthModule, AngularFirestoreModule,HttpClientModule,AngularFireStorageModule,
+    SocketIoModule.forRoot(config),
     
   ],
   providers: [
