@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 
 <ion-header [translucent]="true">
   <ion-toolbar>
@@ -5,6 +6,21 @@
       Chat
     </ion-title>
   </ion-toolbar>
+=======
+<ion-header [translucent]="true">
+  <ion-navbar>
+    <ion-grid>
+      <ion-row>
+          <ion-buttons start><ion-button  [routerLink]="['/tabs/home-discussion']">
+            <ion-icon name="arrow-back-outline"></ion-icon> 
+          </ion-button> </ion-buttons>
+          <ion-title>
+            Chat
+          </ion-title>
+      </ion-row>
+    </ion-grid>
+  </ion-navbar>
+>>>>>>> Stashed changes
 </ion-header>
  
 <ion-content>
@@ -31,15 +47,15 @@
 <ion-footer>
   <ion-toolbar>
     <ion-row class="message_row">
-      <ion-col col-9>
-        <ion-item no-lines>
-          <ion-input type="text" placeholder="Message" [(ngModel)]="message"></ion-input>
-        </ion-item>
+      <ion-col col-11>
+          <ion-textarea auto-grow class="message-input" rows="1" [(ngModel)]="message"></ion-textarea>
       </ion-col>
-      <ion-col col-3>
-        <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="message === ''">
-        Send
-      </button>
+      <ion-col col-1>
+        <ion-button expand="block" fill="clear" color="primary" [disabled]="message === ''" class="msg-btn"
+          (click)="sendMessage()">
+          <ion-icon name="send-outline"></ion-icon>
+        </ion-button>
+        
       </ion-col>
     </ion-row>
   </ion-toolbar>
