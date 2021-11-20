@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, ToastController } from '@ionic/angular';
+import { LoadingController, NavController, NavParams, ToastController } from '@ionic/angular';
 import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
+import { get, GlobalService } from '../global.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.page.html',
@@ -9,9 +11,10 @@ import { Observable } from 'rxjs';
 })
 export class ChatPage implements OnInit {
   messages = [];
-  nickname = 'Hack';
+  nickname = '';
   message = '';
-  constructor(public navCtrl: NavController, private socket: Socket, private toastCtrl: ToastController) {
+  userDetails : any;
+  constructor(public navCtrl: NavController,   private socket: Socket, private toastCtrl: ToastController) {
     // this.nickname = this.navParams.get('nickname');
     this.getMessages().subscribe(message =>{
       this.messages.push(message);
@@ -36,6 +39,9 @@ getMessages(){
   });
   return observable;
 }
+  async getNickName(){
+  this.nickname =await get('nickName');
+}
 getUsers(){
   let observable = new Observable(observer=>{
     this.socket.on('users-changed', data => {
@@ -51,7 +57,10 @@ sendMessage(){
 showToast(message: string) {
   this.toastCtrl.create({ message, duration: 3000, }).then(toastData => toastData.present());
 }
+
+
   ngOnInit() {
+    this.getNickName();
   }
 
 }

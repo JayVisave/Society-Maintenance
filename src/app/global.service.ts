@@ -28,7 +28,7 @@ export class GlobalService {
   public static userId;
   public static societyId;
   public static userCode;
-  
+  public static nickName;
 //   constructor(name, state, country) {
 //     this.name = name;
 //     this.state = state;
