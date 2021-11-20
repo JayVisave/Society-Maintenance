@@ -71,7 +71,11 @@ const routes: Routes = [
   {
     path: 'society-all-visitors',
     loadChildren: () => import('./society-all-visitors/society-all-visitors.module').then( m => m.SocietyAllVisitorsPageModule)
+  },  {
+    path: 'chat',
+    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
   }
+
 
 
 
