@@ -17,7 +17,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
-const config: SocketIoConfig = { url: 'http://localhost:3001',options: {}};
+const config: SocketIoConfig = { url: 'http://localhost:3001',options: { transports: ['websocket', 'polling', 'flashsocket'] }};
 
 @NgModule({
   declarations: [AppComponent],

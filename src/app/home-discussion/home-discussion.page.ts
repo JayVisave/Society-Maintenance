@@ -15,8 +15,8 @@ export class HomeDiscussionPage implements OnInit {
   joinChat(){
     this.socket.connect();
     this.socket.emit('set-nickname',this.nickname);
-    // this.navCtrl.navigateForward('chat/'+this.nickname);
-    this.navCtrl.navigateForward('/chat/niand');
+    this.navCtrl.navigateForward('chat/'+this.nickname);
+    // this.navCtrl.navigateForward('/chat/niand');
 
     // this.navCtrl.navigateForward('/chat');
   }

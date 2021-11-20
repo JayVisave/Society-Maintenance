@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, ToastController } from '@ionic/angular';
 import { Socket } from 'ngx-socket-io';
-import { observable, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.page.html',
@@ -9,10 +9,10 @@ import { observable, Observable } from 'rxjs';
 })
 export class ChatPage implements OnInit {
   messages = [];
-  nickname = '';
+  nickname = 'Hack';
   message = '';
-  constructor(public navCtrl: NavController, public navParams: NavParams, private socket: Socket, private toastCtrl: ToastController) {
-    this.nickname = this.navParams.get('nickname');
+  constructor(public navCtrl: NavController, private socket: Socket, private toastCtrl: ToastController) {
+    // this.nickname = this.navParams.get('nickname');
     this.getMessages().subscribe(message =>{
       this.messages.push(message);
     })
