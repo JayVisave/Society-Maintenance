@@ -4,14 +4,6 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Devdactic Chat
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
- 
 <ion-content>
  
   <ion-grid>
@@ -46,7 +38,7 @@
       <ion-col size="2">
         <ion-button expand="block" fill="clear" color="primary" [disabled]="message === ''" class="msg-btn"
           (click)="sendMessage()">
-          <ion-icon name="ios-send" slot="icon-only"></ion-icon>
+          <ion-icon name="send-outline"></ion-icon>
         </ion-button>
       </ion-col>
     </ion-row>
