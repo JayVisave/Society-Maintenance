@@ -20,6 +20,10 @@ const routes: Routes = [
         loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
       },
       {
+        path: 'chat',
+        loadChildren: () => import('../chat/chat.module').then(m => m.ChatPageModule)
+      },
+      {
         path: 'society-admin-tab3',
         loadChildren: () => import('../society-admin-tab3/society-admin-tab3.module').then(m => m.SocietyAdminTab3PageModule)
       },
