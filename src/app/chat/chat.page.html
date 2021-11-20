@@ -1,12 +1,3 @@
-<<<<<<< Updated upstream
-
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Chat
-    </ion-title>
-  </ion-toolbar>
-=======
 <ion-header [translucent]="true">
   <ion-navbar>
     <ion-grid>
@@ -20,42 +11,41 @@
       </ion-row>
     </ion-grid>
   </ion-navbar>
->>>>>>> Stashed changes
 </ion-header>
  
 <ion-content>
   <ion-grid>
+    <!-- <ion-text color="medium" text-center>
+      <p>You joined the chat as {{ currentUser }}</p>
+    </ion-text> -->
     <ion-row *ngFor="let message of messages">
-      
-      <ion-col col-9 *ngIf="message.from !== nickname" class="message" [ngClass]="{'my_message': message.from === nickname, 'other_message': message.from !== nickname}">
+      <ion-col size="9" *ngIf="message.user !== currentUser" class="message other-message">
         <span class="user_name">{{ message.from }}:</span><br>
         <span>{{ message.text }}</span>
         <div class="time">{{message.created | date:'dd.MM hh:MM'}}</div>
       </ion-col>
  
-      <ion-col offset-3 col-9 *ngIf="message.from === nickname" class="message" [ngClass]="{'my_message': message.from === nickname, 'other_message': message.from !== nickname}">
+      <ion-col offset="3" size="9" *ngIf="message.user === currentUser" class="message my-message">
         <span class="user_name">{{ message.from }}:</span><br>
         <span>{{ message.text }}</span>
         <div class="time">{{message.created | date:'dd.MM hh:MM'}}</div>
       </ion-col>
- 
     </ion-row>
   </ion-grid>
  
 </ion-content>
  
 <ion-footer>
-  <ion-toolbar>
-    <ion-row class="message_row">
-      <ion-col col-11>
-          <ion-textarea auto-grow class="message-input" rows="1" [(ngModel)]="message"></ion-textarea>
+  <ion-toolbar color="light">
+    <ion-row align-items-center>
+      <ion-col size="10">
+        <ion-textarea auto-grow class="message-input" rows="1" [(ngModel)]="message"></ion-textarea>
       </ion-col>
-      <ion-col col-1>
-        <ion-button expand="block" fill="clear" color="primary" [disabled]="message === ''" class="msg-btn"
+      <ion-col size="2">
+        <ion-button fill="clear" [disabled]="message === ''" class="msg-btn"
           (click)="sendMessage()">
           <ion-icon name="send-outline"></ion-icon>
         </ion-button>
-        
       </ion-col>
     </ion-row>
   </ion-toolbar>
