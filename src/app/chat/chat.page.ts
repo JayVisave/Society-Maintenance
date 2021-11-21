@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, NavController, NavParams, ToastController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
-import { get, GlobalService } from '../global.service';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { get } from '../global.service';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.page.html',
@@ -22,9 +21,9 @@ export class ChatPage implements OnInit {
     this.getUsers().subscribe(data =>{
       let user = data['user'];
       if(data['event'] == 'left'){
-        this.showToast('Society Member Left '+user);
+        this.showToast(user+' Left.');
       }else{
-        this.showToast('Society Member Joined '+user);
+        this.showToast(user+' Joined.');
       }
     });
    }
